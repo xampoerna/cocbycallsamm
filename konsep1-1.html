@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COC Double Elimination 1 VS 1</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+        min-height: 100vh;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #4a5568;
+        margin-bottom: 30px;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .tournament-info {
+        background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .bracket-container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        margin-bottom: 30px;
+      }
+
+      .bracket-section {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        border-left: 5px solid;
+      }
+
+      .winner-bracket {
+        border-left-color: #28a745;
+      }
+
+      .loser-bracket {
+        border-left-color: #dc3545;
+      }
+
+      .grand-final {
+        border-left-color: #ffc107;
+        background: linear-gradient(45deg, #ffd89b 0%, #19547b 100%);
+        color: white;
+      }
+
+      .bracket-title {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+      }
+
+      .rounds {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+      }
+
+      .round {
+        min-width: 200px;
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .round h4 {
+        margin: 0 0 15px 0;
+        color: #495057;
+        text-align: center;
+        border-bottom: 2px solid #e9ecef;
+        padding-bottom: 8px;
+      }
+
+      .match {
+        background: #e9ecef;
+        margin: 8px 0;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 0.9em;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+      }
+
+      .match:hover {
+        border-color: #007bff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+      }
+
+      .match-format {
+        background: linear-gradient(45deg, #12c2e9, #c471ed, #f64f59);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+      }
+
+      .challenge-grid {
+        display: grid;
+        color: black;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+      }
+
+      .challenge-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        border-top: 4px solid;
+      }
+
+      .numeric {
+        border-top-color: #ff6b6b;
+      }
+      .spatial {
+        border-top-color: #4ecdc4;
+      }
+      .memory {
+        border-top-color: #45b7d1;
+      }
+
+      .timeline {
+        background: #2c3e50;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .stat-card {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .flow-arrow {
+        text-align: center;
+        font-size: 2em;
+        color: #6c757d;
+        margin: 10px 0;
+      }
+
+      @media (max-width: 768px) {
+        .rounds {
+          flex-direction: column;
+        }
+
+        .round {
+          min-width: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🏆 Clash of Champions SD - Double Elimination 1 VS 1</h1>
+
+      <div class="tournament-info">
+        <h2>Format Kompetisi: 32 Peserta</h2>
+        <p>
+          <strong>Sistem:</strong> Double Elimination |
+          <strong>Kategori:</strong> Numeric, Spatial, Memory
+        </p>
+      </div>
+
+      <div class="match-format">
+        <h3>
+          🎯 Format Setiap Pertandingan (30 menit - sesuaikan dengan kondisi)
+        </h3>
+        <div class="challenge-grid">
+          <div class="challenge-card numeric">
+            <h4>🔢 NUMERIC</h4>
+            <p>10 menit | Max 100 poin</p>
+            <ul>
+              <li>Speed Math</li>
+              <li>Number Pattern</li>
+              <li>Logic Problems</li>
+              <li>Mental Calculation</li>
+            </ul>
+          </div>
+          <div class="challenge-card spatial">
+            <h4>🧩 SPATIAL</h4>
+            <p>10 menit | Max 100 poin</p>
+            <ul>
+              <li>Shape Recognition</li>
+              <li>Pattern Blocks</li>
+              <li>Mirror Image</li>
+              <li>3D Visualization</li>
+              <li>Map Reading</li>
+              <li>Puzzle Assembly</li>
+            </ul>
+          </div>
+          <div class="challenge-card memory">
+            <h4>🧠 MEMORY</h4>
+            <p>10 menit | Max 100 poin</p>
+            <ul>
+              <li>Sequence Memory</li>
+              <li>Visual Recall</li>
+              <li>Audio Memory</li>
+              <li>Story Memory</li>
+              <li>Card Memory</li>
+            </ul>
+          </div>
+        </div>
+        <p style="text-align: center; font-size: 1.2em">
+          <strong>Pemenang = Total Skor Tertinggi (Max 300 poin)</strong>
+        </p>
+      </div>
+
+      <div class="bracket-container">
+        <!-- WINNER BRACKET -->
+        <div class="bracket-section winner-bracket">
+          <div class="bracket-title">🏅 Winner Bracket (Jalur Menang)</div>
+          <div class="rounds">
+            <div class="round">
+              <h4>Round 1</h4>
+              <div class="match">P1 vs P2</div>
+              <div class="match">P3 vs P4</div>
+              <div class="match">P5 vs P6</div>
+              <div class="match">P7 vs P8</div>
+              <div class="match">P9 vs P10</div>
+              <div class="match">P11 vs P12</div>
+              <div class="match">P13 vs P14</div>
+              <div class="match">P15 vs P16</div>
+              <div class="match">P17 vs P18</div>
+              <div class="match">P19 vs P20</div>
+              <div class="match">P21 vs P22</div>
+              <div class="match">P23 vs P24</div>
+              <div class="match">P25 vs P26</div>
+              <div class="match">P27 vs P28</div>
+              <div class="match">P29 vs P30</div>
+              <div class="match">P31 vs P32</div>
+              <small>32 → 16 peserta</small>
+            </div>
+
+            <div class="round">
+              <h4>Round 2</h4>
+              <div class="match">W1 vs W2</div>
+              <div class="match">W3 vs W4</div>
+              <div class="match">W5 vs W6</div>
+              <div class="match">W7 vs W8</div>
+              <div class="match">W9 vs W10</div>
+              <div class="match">W11 vs W12</div>
+              <div class="match">W13 vs W14</div>
+              <div class="match">W15 vs W16</div>
+              <small>16 → 8 peserta</small>
+            </div>
+
+            <div class="round">
+              <h4>Quarterfinal</h4>
+              <div class="match">W17 vs W18</div>
+              <div class="match">W19 vs W20</div>
+              <div class="match">W21 vs W22</div>
+              <div class="match">W23 vs W24</div>
+              <small>8 → 4 peserta</small>
+            </div>
+
+            <div class="round">
+              <h4>Semifinal</h4>
+              <div class="match">W25 vs W26</div>
+              <div class="match">W27 vs W28</div>
+              <small>4 → 2 peserta</small>
+            </div>
+
+            <div class="round">
+              <h4>Final Competition</h4>
+              <div class="match">W29 vs W30 vs WLB</div>
+              <small>3 → 2 → 1 [JUARA]</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          ⬇️ Peserta yang kalah turun ke Loser Bracket
+        </div>
+
+        <!-- LOSER BRACKET -->
+        <div class="bracket-section loser-bracket">
+          <div class="bracket-title">
+            💔 Loser Bracket (Jalur Kalah - Kesempatan Kedua)
+          </div>
+          <div class="rounds">
+            <div class="round">
+              <h4>LB Round 1</h4>
+              <div class="match">L1 vs L2</div>
+              <div class="match">L3 vs L4</div>
+              <div class="match">L5 vs L6</div>
+              <div class="match">L7 vs L8</div>
+              <div class="match">L9 vs L10</div>
+              <div class="match">L11 vs L12</div>
+              <div class="match">L13 vs L14</div>
+              <div class="match">L15 vs L16</div>
+              <small>16 → 8 peserta</small>
+            </div>
+
+            <div class="round">
+              <h4>LB Round 2</h4>
+              <div class="match">LW1 vs L17</div>
+              <div class="match">LW2 vs L18</div>
+              <div class="match">LW3 vs L19</div>
+              <div class="match">LW4 vs L20</div>
+              <small>12 → 4 peserta</small>
+            </div>
+
+            <div class="round">
+              <h4>LB Round 3</h4>
+              <div class="match">LW5 vs LW6</div>
+              <div class="match">LW7 vs LW8</div>
+              <small>4 → 2 peserta</small>
+            </div>
+
+            <div class="round">
+              <h4>LB Round 4</h4>
+              <div class="match">LW9 vs L21</div>
+              <small>3 → 1 peserta</small>
+            </div>
+
+            <div class="round">
+              <h4>LB Round 5</h4>
+              <div class="match">LW10 vs L22</div>
+              <small>2 → 1 peserta</small>
+            </div>
+
+            <div class="round">
+              <h4>LB Final</h4>
+              <div class="match">LW11 = Juara LB</div>
+              <small>Siap ke Grand Final</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">🔥 GRAND FINAL 🔥</div>
+
+        <!-- GRAND FINAL -->
+        <div class="bracket-section grand-final">
+          <div class="bracket-title">👑 Grand Final</div>
+          <div style="text-align: center; padding: 20px">
+            <div
+              class="match"
+              style="
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                font-size: 1.2em;
+              "
+            >
+              <strong
+                >2 Peserta terbaik Winner Bracket + Juara Loser Bracket</strong
+              >
+            </div>
+            <p style="margin-top: 15px">
+              <strong>Aturan Pertandingan:</strong><br />
+              • Mencari Juara terbaik 1, Juara 2 dan Juara 3<br />
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <h3>⏰ Estimasi Waktu Tournament</h3>
+        <div class="stats">
+          <div class="stat-card">
+            <h4>Total Matches</h4>
+            <p>62 pertandingan</p>
+          </div>
+          <div class="stat-card">
+            <h4>Durasi per Match</h4>
+            <p>30 menit</p>
+          </div>
+          <div class="stat-card">
+            <h4>Total Waktu</h4>
+            <p>~31 jam</p>
+          </div>
+          <div class="stat-card">
+            <h4>Rekomendasi</h4>
+            <p>3-4 hari event</p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style="
+          background: #e8f5e8;
+          padding: 20px;
+          border-radius: 10px;
+          border-left: 5px solid #28a745;
+        "
+      >
+        <h3>✅ Keunggulan Double Elimination</h3>
+        <ul>
+          <li>
+            <strong>Fair Play:</strong> Setiap peserta mendapat minimal 2
+            kesempatan
+          </li>
+          <li>
+            <strong>Data Lengkap:</strong> Lebih banyak pertandingan = data
+            performa yang lebih akurat
+          </li>
+          <li>
+            <strong>Excitement:</strong> Grand Final yang menantang dengan
+            sistem reset
+          </li>
+          <li>
+            <strong>Learning:</strong> Peserta bisa belajar dari kekalahan
+            pertama
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

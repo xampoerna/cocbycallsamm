@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COC EX-SOAL</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+        min-height: 100vh;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #4a5568;
+        margin-bottom: 30px;
+        font-size: 2.5em;
+      }
+
+      .category-section {
+        margin: 30px 0;
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-left: 8px solid;
+      }
+
+      .numeric {
+        border-left-color: #e74c3c;
+      }
+      .spatial {
+        border-left-color: #2ecc71;
+      }
+      .memory {
+        border-left-color: #3498db;
+      }
+
+      .category-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .category-icon {
+        font-size: 2.5em;
+      }
+
+      .category-title {
+        font-size: 2em;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      .level-container {
+        margin: 20px 0;
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+      }
+
+      .level-header {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .challenge-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .challenge-card {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        padding: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .challenge-card:hover {
+        border-color: #007bff;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 123, 255, 0.2);
+      }
+
+      .challenge-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+      }
+
+      .challenge-content {
+        font-size: 1em;
+        line-height: 1.6;
+      }
+
+      .options {
+        margin: 10px 0;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 5px;
+      }
+
+      .answer {
+        color: #28a745;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      .team-challenge {
+        background: linear-gradient(45deg, #ff9a9e, #fecfef);
+        color: #2c3e50;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 15px 0;
+      }
+
+      .difficulty-indicator {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8em;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .easy {
+        background: #d4edda;
+        color: #155724;
+      }
+      .medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+      .hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .time-limit {
+        background: #17a2b8;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.9em;
+        float: right;
+      }
+
+      .example-visual {
+        background: #e3f2fd;
+        border: 2px dashed #2196f3;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        margin: 10px 0;
+        font-family: monospace;
+      }
+
+      .team-instruction {
+        background: #fff3e0;
+        border-left: 4px solid #ff9800;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      @media (max-width: 768px) {
+        .challenge-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎯 Contoh Soal/Tantangan</h1>
+
+      <!-- NUMERIC CHALLENGES -->
+      <div class="category-section numeric">
+        <div class="category-header">
+          <div class="category-icon">🔢</div>
+          <h2 class="category-title">NUMERIC CHALLENGES</h2>
+        </div>
+
+        <!-- Individual Level -->
+        <div class="level-container">
+          <div class="level-header">INDIVIDUAL - Round 1, 2, 5, 6, 7</div>
+
+          <div class="challenge-grid">
+            <div class="challenge-card">
+              <div class="difficulty-indicator easy">MUDAH</div>
+              <div class="time-limit">⏱️ 2 menit</div>
+              <div class="challenge-title">Speed Math</div>
+              <div class="challenge-content">
+                Hitung secepat mungkin:<br />
+                • 25 + 17 = ?<br />
+                • 48 - 19 = ?<br />
+                • 6 × 7 = ?<br />
+                • 72 ÷ 8 = ?<br />
+                • 15 + 28 - 13 = ?
+              </div>
+              <div class="answer">Jawaban: 42, 29, 42, 9, 30</div>
+            </div>
+
+            <div class="challenge-card">
+              <div class="difficulty-indicator medium">SEDANG</div>
+              <div class="time-limit">⏱️ 3 menit</div>
+              <div class="challenge-title">Number Pattern</div>
+              <div class="challenge-content">
+                Lengkapi pola angka berikut:<br />
+                • 2, 4, 6, ?, 10<br />
+                • 1, 4, 7, ?, 13<br />
+                • 3, 6, 12, ?, 48<br />
+                • 100, 90, 80, ?, ?
+              </div>
+              <div class="answer">Jawaban: 8, 10, 24, 70&60</div>
+            </div>
+
+            <div class="challenge-card">
+              <div class="difficulty-indicator hard">SULIT</div>
+              <div class="time-limit">⏱️ 4 menit</div>
+              <div class="challenge-title">Logic Numbers</div>
+              <div class="challenge-content">
+                Andi memiliki kelereng 3 kali lebih banyak dari Budi. Budi
+                memiliki 12 kelereng. Jika mereka memberikan 8 kelereng kepada
+                Cici, berapa total kelereng mereka sekarang?
+              </div>
+              <div class="answer">Jawaban: 40 kelereng</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Level -->
+        <div class="level-container">
+          <div class="level-header">TEAM - Round 3 & 4</div>
+
+          <div class="team-challenge">
+            <div class="challenge-title">🤝 Math Relay Team</div>
+            <div class="team-instruction">
+              <strong>Format:</strong> 4 anggota tim, estafet matematis<br />
+              <strong>Aturan:</strong> Anggota 1 selesai → hasil diberikan ke
+              Anggota 2, dst.
+            </div>
+
+            <div class="challenge-content">
+              <strong>Anggota 1:</strong> 15 × 4 = ? (hasil = A)<br />
+              <strong>Anggota 2:</strong> A ÷ 6 = ? (hasil = B)<br />
+              <strong>Anggota 3:</strong> B + 23 = ? (hasil = C)<br />
+              <strong>Anggota 4:</strong> C × 2 = ? (FINAL ANSWER)
+            </div>
+            <div class="answer">Jawaban Tim: 66</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPATIAL CHALLENGES -->
+      <div class="category-section spatial">
+        <div class="category-header">
+          <div class="category-icon">🧩</div>
+          <h2 class="category-title">SPATIAL CHALLENGES</h2>
+        </div>
+
+        <!-- Individual Level -->
+        <div class="level-container">
+          <div class="level-header">INDIVIDUAL - Round 1, 2, 5, 6, 7</div>
+
+          <div class="challenge-grid">
+            <div class="challenge-card">
+              <div class="difficulty-indicator easy">MUDAH</div>
+              <div class="time-limit">⏱️ 2 menit</div>
+              <div class="challenge-title">Shape Recognition</div>
+              <div class="challenge-content">
+                Bentuk mana yang sama dengan gambar yang diputar?
+                <div class="example-visual">
+                  Original: ⬟<br />
+                  A) ⬢ B) ⬟ C) ⬡ D) ⬠
+                </div>
+              </div>
+              <div class="answer">Jawaban: B</div>
+            </div>
+
+            <div class="challenge-card">
+              <div class="difficulty-indicator medium">SEDANG</div>
+              <div class="time-limit">⏱️ 3 menit</div>
+              <div class="challenge-title">Pattern Blocks</div>
+              <div class="challenge-content">
+                Susun 4 segitiga sama sisi untuk membentuk:
+                <div class="example-visual">
+                  Target: Bentuk Diamond Besar<br />
+                  △ △ △ △ → ◊
+                </div>
+                Gambar susunannya!
+              </div>
+            </div>
+
+            <div class="challenge-card">
+              <div class="difficulty-indicator hard">SULIT</div>
+              <div class="time-limit">⏱️ 4 menit</div>
+              <div class="challenge-title">3D Visualization</div>
+              <div class="challenge-content">
+                Jika kubus ini dilipat, sisi mana yang akan berhadapan dengan
+                sisi bertanda "X"?
+                <div class="example-visual">
+                  Jaring-jaring kubus:<br />
+                  &nbsp;&nbsp;[A]<br />
+                  [B][X][C][D]<br />
+                  &nbsp;&nbsp;[E]
+                </div>
+              </div>
+              <div class="answer">Jawaban: Sisi C</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Level -->
+        <div class="level-container">
+          <div class="level-header">TEAM - Round 3 & 4</div>
+
+          <div class="team-challenge">
+            <div class="challenge-title">🧩 Collaborative Puzzle</div>
+            <div class="team-instruction">
+              <strong>Format:</strong> Tim dapat 16 piece puzzle terpisah<br />
+              <strong>Aturan:</strong> Hanya boleh komunikasi verbal, tidak
+              boleh tukar piece
+            </div>
+
+            <div class="challenge-content">
+              <strong>Misi:</strong> Menyusun gambar "Peta Indonesia"<br />
+              <strong>Setiap anggota:</strong> Dapat 4 piece puzzle<br />
+              <strong>Tantangan:</strong> Koordinasi tanpa melihat piece
+              teman<br />
+              <strong>Waktu:</strong> 8 menit
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEMORY CHALLENGES -->
+      <div class="category-section memory">
+        <div class="category-header">
+          <div class="category-icon">🧠</div>
+          <h2 class="category-title">MEMORY CHALLENGES</h2>
+        </div>
+
+        <!-- Individual Level -->
+        <div class="level-container">
+          <div class="level-header">INDIVIDUAL - Round 1, 2, 5, 6, 7</div>
+
+          <div class="challenge-grid">
+            <div class="challenge-card">
+              <div class="difficulty-indicator easy">MUDAH</div>
+              <div class="time-limit">⏱️ 3 menit</div>
+              <div class="challenge-title">Sequence Memory</div>
+              <div class="challenge-content">
+                <strong>Fase 1:</strong> Lihat urutan warna (30 detik)<br />
+                <div class="example-visual">🔴 🟢 🔵 🟡 🔴 🟢</div>
+                <strong>Fase 2:</strong> Ulangi urutan yang sama
+              </div>
+            </div>
+
+            <div class="challenge-card">
+              <div class="difficulty-indicator medium">SEDANG</div>
+              <div class="time-limit">⏱️ 4 menit</div>
+              <div class="challenge-title">Visual Memory</div>
+              <div class="challenge-content">
+                <strong>Fase 1:</strong> Lihat 12 gambar hewan (45 detik)<br />
+                <strong>Fase 2:</strong> Gambar disembunyikan<br />
+                <strong>Fase 3:</strong> Sebutkan hewan yang TIDAK ada dalam
+                daftar:<br />
+                Gajah, Kucing, Ayam, Sapi, Kambing, Bebek
+              </div>
+            </div>
+
+            <div class="challenge-card">
+              <div class="difficulty-indicator hard">SULIT</div>
+              <div class="time-limit">⏱️ 5 menit</div>
+              <div class="challenge-title">Story Recall</div>
+              <div class="challenge-content">
+                Dengarkan cerita pendek (2 menit), lalu jawab:<br />
+                • Siapa nama tokoh utama?<br />
+                • Berapa umur tokoh tersebut?<br />
+                • Apa warna bajunya?<br />
+                • Ke mana dia pergi?<br />
+                • Apa yang dia beli?
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Level -->
+        <div class="level-container">
+          <div class="level-header">TEAM - Round 3 & 4</div>
+
+          <div class="team-challenge">
+            <div class="challenge-title">🔗 Memory Chain Team</div>
+            <div class="team-instruction">
+              <strong>Format:</strong> Estafet memori berkelompok<br />
+              <strong>Aturan:</strong> Setiap anggota menambah 1 item ke daftar
+            </div>
+
+            <div class="challenge-content">
+              <strong>Contoh tema: "Pergi ke Pasar"</strong><br />
+              <strong>Anggota 1:</strong> "Saya pergi ke pasar membeli apel"<br />
+              <strong>Anggota 2:</strong> "...membeli apel dan pisang"<br />
+              <strong>Anggota 3:</strong> "...apel, pisang, dan wortel"<br />
+              <strong>Anggota 4:</strong> "...apel, pisang, wortel, dan
+              telur"<br />
+              <strong>Target:</strong> 12 item tanpa kesalahan
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style="
+          background: #2c3e50;
+          color: white;
+          padding: 25px;
+          border-radius: 15px;
+          margin-top: 30px;
+        "
+      >
+        <h3>📋 Catatan Implementasi</h3>
+        <ul style="line-height: 1.8">
+          <li><strong>Scoring:</strong> Setiap kategori maksimal 100 poin</li>
+          <li><strong>Bonus:</strong> Kecepatan menyelesaikan +10 poin</li>
+          <li>
+            <strong>Team Scoring:</strong> Rata-rata individual + bonus
+            kerjasama
+          </li>
+          <li><strong>Tingkat Kesulitan:</strong> Meningkat setiap round</li>
+          <li>
+            <strong>Adaptasi:</strong> Soal disesuaikan usia dan kemampuan SD
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

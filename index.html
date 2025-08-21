@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard • Rancangan Program COC SD</title>
+    <style>
+      :root {
+        --bg: #304677; /* slate-900 */
+        --bg-soft: #9d9fa7; /* slightly darker */
+        --card: #111a35; /* slate-950-ish */
+        --text: #e2e8f0; /* slate-200 */
+        --muted: #94a3b8; /* slate-400 */
+        --primary: #7c3aed; /* violet-600 */
+        --primary-2: #6366f1; /* indigo-500 */
+        --ring: #a78bfa; /* violet-400 */
+        --ok: #22c55e;
+        --warn: #f59e0b;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+        color: var(--text);
+        background: radial-gradient(
+            1200px 600px at 80% -10%,
+            rgba(124, 58, 237, 0.25),
+            transparent 60%
+          ),
+          radial-gradient(
+            1000px 500px at -10% 20%,
+            rgba(99, 102, 241, 0.18),
+            transparent 55%
+          ),
+          linear-gradient(180deg, var(--bg-soft), var(--bg));
+        min-height: 100%;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 1100px;
+        margin-inline: auto;
+        padding: 24px;
+      }
+      header {
+        display: grid;
+        gap: 20px;
+        padding: 28px;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          rgba(15, 23, 42, 0.55),
+          rgba(17, 24, 39, 0.35)
+        );
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        backdrop-filter: blur(8px);
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        background: rgba(124, 58, 237, 0.1);
+        border: 1px solid rgba(124, 58, 237, 0.35);
+        padding: 6px 10px;
+        border-radius: 999px;
+        width: max-content;
+      }
+      .title {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 14px;
+      }
+      h1 {
+        font-size: clamp(26px, 4vw, 38px);
+        line-height: 1.15;
+        margin: 0;
+        background: linear-gradient(90deg, #fff, #c7d2fe 60%, #e9d5ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .subtitle {
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(14px, 2vw, 16px);
+      }
+      .cta-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 6px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.02)
+        );
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: transform 0.15s ease, border-color 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+      .btn:focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 2px;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        border-color: rgba(167, 139, 250, 0.6);
+      }
+      .btn.primary {
+        border-color: rgba(124, 58, 237, 0.8);
+        background: linear-gradient(
+          180deg,
+          rgba(124, 58, 237, 0.6),
+          rgba(99, 102, 241, 0.5)
+        );
+        box-shadow: 0 10px 30px rgba(124, 58, 237, 0.22);
+      }
+      /* Grid cards */
+      .grid {
+        margin-top: 24px;
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(12, 1fr);
+      }
+      .card {
+        grid-column: span 12;
+        background: linear-gradient(
+          180deg,
+          rgba(17, 24, 39, 0.9),
+          rgba(15, 23, 42, 0.85)
+        );
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 18px;
+        padding: 20px;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        transition: transform 0.18s ease, border-color 0.18s ease,
+          box-shadow 0.18s ease, background 0.18s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(167, 139, 250, 0.55);
+        box-shadow: 0 20px 50px rgba(124, 58, 237, 0.12);
+        background: linear-gradient(
+          180deg,
+          rgba(17, 24, 39, 0.95),
+          rgba(15, 23, 42, 0.9)
+        );
+      }
+      .icon {
+        flex: 0 0 52px;
+        height: 52px;
+        width: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(
+          135deg,
+          rgba(124, 58, 237, 0.25),
+          rgba(99, 102, 241, 0.18)
+        );
+        border: 1px solid rgba(167, 139, 250, 0.45);
+      }
+      .content {
+        flex: 1;
+        min-width: 0;
+      }
+      .card h3 {
+        margin: 0 0 6px;
+        font-size: 18px;
+        letter-spacing: -0.01em;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .meta {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .badge {
+        font-size: 11px;
+        color: #e9d5ff;
+        background: rgba(124, 58, 237, 0.15);
+        border: 1px solid rgba(167, 139, 250, 0.35);
+        padding: 4px 8px;
+        border-radius: 999px;
+      }
+      .go {
+        margin-left: auto;
+        align-self: center;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 13px;
+        text-decoration: none;
+        color: #fff;
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.02)
+        );
+      }
+      .go:hover {
+        border-color: rgba(167, 139, 250, 0.6);
+      }
+      .go:focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 2px;
+      }
+      .card .shade {
+        position: absolute;
+        inset: auto -20% -40% auto;
+        height: 160px;
+        width: 360px;
+        background: radial-gradient(
+          closest-side,
+          rgba(124, 58, 237, 0.25),
+          transparent 70%
+        );
+        filter: blur(16px);
+        pointer-events: none;
+        transform: rotate(-12deg);
+      }
+      /* Responsive columns */
+      @media (min-width: 720px) {
+        .card {
+          grid-column: span 6;
+        }
+      }
+      @media (min-width: 1024px) {
+        .card {
+          grid-column: span 4;
+        }
+      }
+      footer {
+        margin: 26px 0 10px;
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+      }
+      /* Better focus for keyboard users globally */
+      a,
+      button,
+      .btn,
+      .go {
+        outline-offset: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <header aria-labelledby="title">
+        <span class="eyebrow" aria-hidden="true"
+          >Dashboard • Rancangan Program COC SD</span
+        >
+        <div class="title">
+          <h1 id="title">Gambaran Konsep COC tingkat SD</h1>
+          <p class="subtitle">
+            Berisikan informasi singkat tentang konsep, rancangan untuk COC
+            tingkat SD
+          </p>
+        </div>
+      </header>
+
+      <section id="tautan" class="grid" aria-label="Tautan utama">
+        <!-- ====== KARTU 1 ====== -->
+        <article class="card">
+          <div class="shade"></div>
+          <div class="icon" aria-hidden="true">
+            <!-- Trophy Icon -->
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M8 21h8M12 17v4M7 4h10v2a5 5 0 0 1-10 0V4Z"
+                stroke="white"
+                stroke-opacity=".9"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M7 6H5a2 2 0 0 0 0 4h2M17 6h2a2 2 0 1 1 0 4h-2"
+                stroke="white"
+                stroke-opacity=".7"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div class="content">
+            <h3>Gambaran Soal COC</h3>
+          </div>
+          <!-- GANTI href DI BAWAH INI -->
+          <a
+            class="go"
+            href="ex-soal.html"
+            target="_blank"
+            rel="noopener"
+            aria-label="Buka Informasi Umum Lomba (tab baru)"
+          >
+            Buka
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M7 17L17 7M17 7H8M17 7v9"
+                stroke="white"
+                stroke-opacity=".9"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        </article>
+
+        <!-- ====== KARTU 2 ====== -->
+        <article class="card">
+          <div class="shade"></div>
+          <div class="icon" aria-hidden="true">
+            <!-- Clipboard Icon -->
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M9 4h6a2 2 0 0 1 2 2v1h-2.5a2.5 2.5 0 0 0-5 0H7V6a2 2 0 0 1 2-2Z"
+                stroke="white"
+                stroke-opacity=".9"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+              <rect
+                x="5"
+                y="7"
+                width="14"
+                height="13"
+                rx="2"
+                stroke="white"
+                stroke-opacity=".7"
+                stroke-width="1.6"
+              />
+              <path
+                d="M8.5 12H15.5M8.5 15H13"
+                stroke="white"
+                stroke-opacity=".9"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <div class="content">
+            <h3>Konsep 1 VS 1 COC</h3>
+          </div>
+          <!-- GANTI href DI BAWAH INI -->
+          <a
+            class="go"
+            href="konsep1-1.html"
+            target="_blank"
+            rel="noopener"
+            aria-label="Buka Pendaftaran & Formulir (tab baru)"
+          >
+            Buka
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M7 17L17 7M17 7H8M17 7v9"
+                stroke="white"
+                stroke-opacity=".9"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        </article>
+
+        <!-- ====== KARTU 3 ====== -->
+        <article class="card">
+          <div class="shade"></div>
+          <div class="icon" aria-hidden="true">
+            <!-- Book/Guide Icon -->
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M5 5.5A2.5 2.5 0 0 1 7.5 3H20v16.5A1.5 1.5 0 0 1 18.5 21H7.5A2.5 2.5 0 0 1 5 18.5V5.5Z"
+                stroke="white"
+                stroke-opacity=".9"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M5 6h12.5A2.5 2.5 0 0 1 20 8.5V3"
+                stroke="white"
+                stroke-opacity=".6"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+              <path
+                d="M9 10h7M9 13h5"
+                stroke="white"
+                stroke-opacity=".9"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <div class="content">
+            <h3>Konsep Double Elimination</h3>
+          </div>
+          <!-- GANTI href DI BAWAH INI -->
+          <a
+            class="go"
+            href="konsep-nicely.html"
+            target="_blank"
+            rel="noopener"
+            aria-label="Buka Teknis Lomba & Materi (tab baru)"
+          >
+            Buka
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M7 17L17 7M17 7H8M17 7v9"
+                stroke="white"
+                stroke-opacity=".9"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        </article>
+      </section>
+
+      <section id="tujuan" class="grid" aria-label="Tujuan program">
+        <article class="card" style="grid-column: span 12">
+          <div class="shade"></div>
+          <div class="icon" aria-hidden="true">
+            <!-- Spark Icon -->
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 3v4M12 17v4M4.9 6.9l2.8 2.8M16.3 16.3l2.8 2.8M3 12h4M17 12h4M6.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"
+                stroke="white"
+                stroke-opacity=".9"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <div class="content">
+            <h3>Tujuan & Nilai Edukatif</h3>
+            <p>
+              Mendorong kreativitas, sportivitas, serta literasi digital siswa
+              SD melalui kompetisi yang inklusif dan menyenangkan.
+            </p>
+            <div class="meta">
+              <span
+                class="badge"
+                style="
+                  border-color: rgba(34, 197, 94, 0.4);
+                  background: rgba(34, 197, 94, 0.15);
+                  color: #bbf7d0;
+                "
+                >Aman & Ramah Anak</span
+              >
+              <span
+                class="badge"
+                style="
+                  border-color: rgba(245, 158, 11, 0.4);
+                  background: rgba(245, 158, 11, 0.15);
+                  color: #fde68a;
+                "
+                >Kolaboratif</span
+              >
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <footer>© <span id="year"></span> .callsamm</footer>
+    </div>
+  </body>
+  <script>
+    // Tahun berjalan di footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</html>
