@@ -4,764 +4,1067 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COC Format Inovatif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="icb.png" type="image/x-icon" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              "bounce-slow": "bounce 2s infinite",
+              "pulse-slow": "pulse 3s infinite",
+              "fade-in": "fadeIn 0.5s ease-in",
+              "slide-up": "slideUp 0.6s ease-out",
+              glow: "glow 2s ease-in-out infinite alternate",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0" },
+                "100%": { opacity: "1" },
+              },
+              slideUp: {
+                "0%": { transform: "translateY(20px)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
+              },
+              glow: {
+                "0%": { boxShadow: "0 0 5px #3b82f6" },
+                "100%": { boxShadow: "0 0 20px #3b82f6, 0 0 30px #3b82f6" },
+              },
+            },
+            backdropBlur: {
+              xs: "2px",
+            },
+          },
+        },
+      };
+    </script>
     <style>
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        margin: 20px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: #333;
-        min-height: 100vh;
+      .gradient-bg {
+        background: linear-gradient(
+          135deg,
+          #667eea 0%,
+          #764ba2 50%,
+          #f093fb 100%
+        );
       }
 
-      .container {
+      .glass-effect {
         background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        padding: 30px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
-      h1 {
-        text-align: center;
-        color: #4a5568;
-        margin-bottom: 30px;
-        font-size: 2.5em;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      .round-gradient-1 {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      }
+      .round-gradient-2 {
+        background: linear-gradient(135deg, #f39c12, #e67e22);
+      }
+      .round-gradient-3 {
+        background: linear-gradient(135deg, #f1c40f, #f39c12);
+      }
+      .round-gradient-4 {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+      }
+      .round-gradient-5 {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+      }
+      .round-gradient-6 {
+        background: linear-gradient(135deg, #9b59b6, #8e44ad);
+      }
+      .round-gradient-7 {
+        background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
       }
 
-      .tournament-overview {
-        background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-        color: white;
-        padding: 25px;
-        border-radius: 15px;
-        margin-bottom: 30px;
-        text-align: center;
+      .challenge-card {
+        transition: all 0.3s ease;
       }
 
-      .round-container {
-        margin: 30px 0;
-        background: white;
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        border-left: 8px solid;
-        position: relative;
-        overflow: hidden;
+      .challenge-card:hover {
+        transform: translateY(-5px) scale(1.02);
       }
 
-      .round-container::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 100px;
-        height: 100px;
-        opacity: 0.1;
-        background-size: contain;
-        background-repeat: no-repeat;
+      .floating {
+        animation: float 6s ease-in-out infinite;
       }
 
-      .round1 {
-        border-left-color: #e74c3c;
-      }
-      .round2 {
-        border-left-color: #f39c12;
-      }
-      .round3 {
-        border-left-color: #f1c40f;
-      }
-      .round4 {
-        border-left-color: #2ecc71;
-      }
-      .round5 {
-        border-left-color: #3498db;
-      }
-      .round6 {
-        border-left-color: #9b59b6;
-      }
-      .round7 {
-        border-left-color: #34495e;
-        background: linear-gradient(45deg, #ffd89b 0%, #19547b 100%);
-        color: white;
-      }
-
-      .round-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-      }
-
-      .round-title {
-        font-size: 1.8em;
-        font-weight: bold;
-        margin: 0;
-      }
-
-      .round-stats {
-        background: rgba(0, 0, 0, 0.1);
-        padding: 10px 20px;
-        border-radius: 25px;
-        font-weight: bold;
-      }
-
-      .round7 .round-stats {
-        background: rgba(255, 255, 255, 0.2);
-      }
-
-      .round-description {
-        font-size: 1.1em;
-        line-height: 1.6;
-        margin-bottom: 20px;
-      }
-
-      .participants-flow {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: rgba(0, 0, 0, 0.05);
-        padding: 15px;
-        border-radius: 10px;
-        margin: 15px 0;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      .round7 .participants-flow {
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      .participant-group {
-        text-align: center;
-        padding: 10px;
-        background: white;
-        border-radius: 8px;
-        min-width: 120px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .round7 .participant-group {
-        background: rgba(255, 255, 255, 0.9);
-        color: #333;
-      }
-
-      .group-label {
-        font-size: 0.9em;
-        color: #666;
-        margin-bottom: 5px;
-      }
-
-      .round7 .group-label {
-        color: #333;
-      }
-
-      .group-count {
-        font-size: 1.5em;
-        font-weight: bold;
-        color: #2c3e50;
-      }
-
-      .arrow {
-        font-size: 2em;
-        color: #3498db;
-        margin: 0 10px;
-      }
-
-      .challenge-details {
-        background: linear-gradient(45deg, #667eea, #764ba2);
-        color: white;
-        padding: 20px;
-        border-radius: 10px;
-        margin: 15px 0;
-      }
-
-      .challenge-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 15px;
-        margin-top: 15px;
-      }
-
-      .challenge-item {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 15px;
-        border-radius: 8px;
-        text-align: center;
-      }
-
-      .group-formation {
-        background: #ecf0f1;
-        padding: 20px;
-        border-radius: 10px;
-        margin: 15px 0;
-      }
-
-      .round7 .group-formation {
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      .groups-display {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        margin-top: 15px;
-      }
-
-      .group-box {
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        text-align: center;
-        border: 3px solid #3498db;
-      }
-
-      .round7 .group-box {
-        background: rgba(255, 255, 255, 0.9);
-        color: #333;
-      }
-
-      .elimination-rule {
-        background: #e74c3c;
-        color: white;
-        padding: 15px;
-        border-radius: 10px;
-        margin: 15px 0;
-        text-align: center;
-        font-weight: bold;
-      }
-
-      .flow-connector {
-        text-align: center;
-        margin: 20px 0;
-        font-size: 2em;
-      }
-
-      .final-podium {
-        display: flex;
-        justify-content: center;
-        align-items: end;
-        gap: 20px;
-        margin: 30px 0;
-      }
-
-      .podium-place {
-        text-align: center;
-        padding: 20px;
-        border-radius: 10px;
-        color: white;
-        min-width: 120px;
-      }
-
-      .place-1 {
-        background: linear-gradient(45deg, #ffd700, #ff8c00);
-        height: 120px;
-        font-size: 1.2em;
-      }
-
-      .place-2 {
-        background: linear-gradient(45deg, #c0c0c0, #808080);
-        height: 100px;
-      }
-
-      .place-3 {
-        background: linear-gradient(45deg, #cd7f32, #8b4513);
-        height: 80px;
-      }
-
-      .tournament-stats {
-        background: #2c3e50;
-        color: white;
-        padding: 25px;
-        border-radius: 15px;
-        margin: 30px 0;
-      }
-
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        margin-top: 20px;
-      }
-
-      .stat-card {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-      }
-
-      .stat-number {
-        font-size: 2em;
-        font-weight: bold;
-        color: #3498db;
-      }
-
-      .advantages {
-        background: linear-gradient(45deg, #2ecc71, #27ae60);
-        color: white;
-        padding: 25px;
-        border-radius: 15px;
-        margin: 30px 0;
-      }
-
-      .advantages ul {
-        list-style: none;
-        padding: 0;
-      }
-
-      .advantages li {
-        padding: 10px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .advantages li:before {
-        content: "✅ ";
-        margin-right: 10px;
-      }
-
-      @media (max-width: 768px) {
-        .round-header {
-          flex-direction: column;
-          gap: 10px;
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
         }
-
-        .participants-flow {
-          flex-direction: column;
+        50% {
+          transform: translateY(-10px);
         }
+      }
 
-        .arrow {
-          transform: rotate(90deg);
-        }
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
 
-        .final-podium {
-          flex-direction: column;
-          align-items: center;
-        }
+      .scroll-reveal.active {
+        opacity: 1;
+        transform: translateY(0);
       }
     </style>
   </head>
-  <body>
-    <div class="container">
-      <h1>🏆 Clash of Champions SD - Format Inovatif</h1>
-
-      <div class="tournament-overview">
-        <h2>Konsep Tournament Hybrid: Eliminasi + Tantangan Berkelompok</h2>
-        <p><strong>32 Peserta → 7 Round → 3 Juara</strong></p>
-        <p>
-          Kombinasi unik Individual vs Kelompok dengan sistem eliminasi bertahap
+  <body class="gradient-bg min-h-screen">
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+      <!-- Header Section -->
+      <div
+        class="glass-effect rounded-3xl p-8 mb-8 text-center animate-fade-in"
+      >
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4 floating">
+          🏆
+          <span
+            class="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"
+            >Clash of Champions SD</span
+          >
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-700 mb-6">
+          Format Tournament Inovatif
         </p>
-      </div>
 
-      <!-- ROUND 1 -->
-      <div class="round-container round1">
-        <div class="round-header">
-          <h2 class="round-title">🔥 ROUND 1 - Individual Battles</h2>
-          <div class="round-stats">32 → 16 Peserta</div>
-        </div>
-
-        <div class="round-description">
-          <strong>Format:</strong> Head-to-head individual competition untuk
-          mendapatkan 16 terbaik
-        </div>
-
-        <div class="participants-flow">
-          <div class="participant-group">
-            <div class="group-label">Peserta Awal</div>
-            <div class="group-count">32</div>
-          </div>
-          <div class="arrow">➡️</div>
-          <div class="participant-group">
-            <div class="group-label">Lolos Round 1</div>
-            <div class="group-count">16</div>
-          </div>
-          <div class="arrow">➡️</div>
-          <div class="participant-group">
-            <div class="group-label">Kalah Round 1</div>
-            <div class="group-count">16</div>
-          </div>
-        </div>
-
-        <div class="challenge-details">
-          <h4>🎯 Format Tantangan Individual</h4>
-          <div class="challenge-grid">
-            <div class="challenge-item">
-              <h5>🔢 NUMERIC</h5>
-              <p>Speed Math Number Pattern Logic Problems Mental Calculation</p>
+        <!-- Tournament Overview -->
+        <div
+          class="round-gradient-1 rounded-2xl p-6 md:p-8 text-white mb-6 animate-glow"
+        >
+          <h2 class="text-2xl md:text-3xl font-bold mb-4">
+            Konsep Tournament Hybrid
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <div class="bg-white bg-opacity-20 rounded-xl p-4">
+              <div class="text-3xl md:text-4xl font-bold">32</div>
+              <div class="text-sm md:text-base">Peserta Awal</div>
             </div>
-            <div class="challenge-item">
-              <h5>🧩 SPATIAL</h5>
-              <p>
-                Shape Recognition Pattern Blocks Mirror Image 3D Visualization
-                Map Reading Puzzle Assembly
-              </p>
+            <div class="bg-white bg-opacity-20 rounded-xl p-4">
+              <div class="text-3xl md:text-4xl font-bold">7</div>
+              <div class="text-sm md:text-base">Total Rounds</div>
             </div>
-            <div class="challenge-item">
-              <h5>🧠 MEMORY</h5>
-              <p>
-                Sequence Memory Visual Recall Audio Memory Story Memory Card
-                Memory
-              </p>
+            <div class="bg-white bg-opacity-20 rounded-xl p-4">
+              <div class="text-3xl md:text-4xl font-bold">3</div>
+              <div class="text-sm md:text-base">Juara</div>
             </div>
           </div>
+          <p class="mt-4 text-lg">Eliminasi + Tantangan Berkelompok</p>
         </div>
       </div>
 
-      <div class="flow-connector">⬇️</div>
-
-      <!-- ROUND 2 -->
-      <div class="round-container round2">
-        <div class="round-header">
-          <h2 class="round-title">🔄 ROUND 2 - Second Chance Battle</h2>
-          <div class="round-stats">16 → 8 Peserta</div>
-        </div>
-
-        <div class="round-description">
-          <strong>Konsep:</strong> 16 peserta yang kalah di Round 1 mendapat
-          kesempatan kedua! Mereka bertanding lagi untuk mendapatkan 8 slot
-          tambahan.
-        </div>
-
-        <div class="participants-flow">
-          <div class="participant-group">
-            <div class="group-label">Kalah Round 1</div>
-            <div class="group-count">16</div>
-          </div>
-          <div class="arrow">➡️</div>
-          <div class="participant-group">
-            <div class="group-label">8 Terbaik</div>
-            <div class="group-count">8</div>
-          </div>
-          <div class="arrow">➡️</div>
-          <div class="participant-group">
-            <div class="group-label">Eliminasi</div>
-            <div class="group-count">8</div>
-          </div>
-        </div>
-
-        <div class="elimination-rule">
-          ⚡ Kesempatan Terakhir: Format yang sama namun lebih intens!
-        </div>
-      </div>
-
-      <div class="flow-connector">⬇️</div>
-
-      <!-- ROUND 3 -->
-      <div class="round-container round3">
-        <div class="round-header">
-          <h2 class="round-title">👥 ROUND 3 - Team Challenge</h2>
-          <div class="round-stats">24 → 20 Peserta</div>
-        </div>
-
-        <div class="round-description">
-          <strong>Game Changer!</strong> 16 pemenang Round 1 + 8 pemenang Round
-          2 = 24 peserta. Kini saatnya tantangan berkelompok!
-        </div>
-
-        <div class="participants-flow">
-          <div class="participant-group">
-            <div class="group-label">Lolos R1</div>
-            <div class="group-count">16</div>
-          </div>
-          <div class="participant-group">
-            <div class="group-label">Lolos R2</div>
-            <div class="group-count">8</div>
-          </div>
-          <div class="arrow">➡️</div>
-          <div class="participant-group">
-            <div class="group-label">Total</div>
-            <div class="group-count">24</div>
-          </div>
-        </div>
-
-        <div class="group-formation">
-          <h4>🎪 Pembagian Kelompok</h4>
-          <div class="groups-display">
-            <div class="group-box">
-              <h5>Kelompok A</h5>
-              <p>4 peserta</p>
-            </div>
-            <div class="group-box">
-              <h5>Kelompok B</h5>
-              <p>4 peserta</p>
-            </div>
-            <div class="group-box">
-              <h5>Kelompok C</h5>
-              <p>4 peserta</p>
-            </div>
-            <div class="group-box">
-              <h5>Kelompok D</h5>
-              <p>4 peserta</p>
-            </div>
-            <div class="group-box">
-              <h5>Kelompok E</h5>
-              <p>4 peserta</p>
-            </div>
-            <div class="group-box">
-              <h5>Kelompok F</h5>
-              <p>4 peserta</p>
+      <!-- Tournament Rounds -->
+      <div id="tournament-rounds" class="space-y-8">
+        <!-- Round 1 -->
+        <div
+          class="scroll-reveal glass-effect rounded-2xl p-6 md:p-8 border-l-8 border-red-500 hover:shadow-2xl transition-all duration-300"
+        >
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6"
+          >
+            <h2
+              class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-0"
+            >
+              🔥 ROUND 1 - Individual Battles
+            </h2>
+            <div
+              class="bg-red-100 text-red-800 px-4 py-2 rounded-full font-bold text-sm md:text-base"
+            >
+              32 → 16 Peserta
             </div>
           </div>
-        </div>
 
-        <div class="challenge-details">
-          <h4>🎯 Tantangan Kelompok</h4>
-          <div class="challenge-grid">
-            <div class="challenge-item">
-              <h5>🔢 NUMERIC TEAM</h5>
-              <p>Relay math, group problem solving</p>
-            </div>
-            <div class="challenge-item">
-              <h5>🧩 SPATIAL TEAM</h5>
-              <p>Collaborative puzzles, team building</p>
-            </div>
-            <div class="challenge-item">
-              <h5>🧠 MEMORY TEAM</h5>
-              <p>Group memory chain, team recall</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="elimination-rule">
-          ❌ 1 Kelompok Terburuk Eliminasi (4 peserta)
-        </div>
-      </div>
-
-      <div class="flow-connector">⬇️</div>
-
-      <!-- ROUND 4 -->
-      <div class="round-container round4">
-        <div class="round-header">
-          <h2 class="round-title">🎖️ ROUND 4 - Elite Groups</h2>
-          <div class="round-stats">20 → 10 Peserta</div>
-        </div>
-
-        <div class="round-description">
-          <strong>Semi Elite Phase:</strong> 20 peserta terbaik dibagi menjadi 4
-          kelompok. Hanya 2 kelompok terbaik yang lolos!
-        </div>
-
-        <div class="group-formation">
-          <h4>🏅 Pembagian Kelompok Elite</h4>
-          <div class="groups-display">
-            <div class="group-box">
-              <h5>Kelompok Alpha</h5>
-              <p>5 peserta</p>
-            </div>
-            <div class="group-box">
-              <h5>Kelompok Beta</h5>
-              <p>5 peserta</p>
-            </div>
-            <div class="group-box">
-              <h5>Kelompok Gamma</h5>
-              <p>5 peserta</p>
-            </div>
-            <div class="group-box">
-              <h5>Kelompok Delta</h5>
-              <p>5 peserta</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="challenge-details">
-          <h4>🎯 Tantangan Level Tinggi</h4>
-          <p>
-            Kombinasi individual dan kelompok dengan tingkat kesulitan yang
-            lebih tinggi. Setiap anggota kelompok harus berkontribusi maksimal!
+          <p class="text-gray-700 text-lg mb-6">
+            <strong>Format:</strong> Head-to-head individual competition untuk
+            mendapatkan 16 terbaik
           </p>
-        </div>
 
-        <div class="elimination-rule">
-          ❌ 2 Kelompok Terburuk Eliminasi (10 peserta)
-        </div>
-      </div>
-
-      <div class="flow-connector">⬇️</div>
-
-      <!-- ROUND 5 -->
-      <div class="round-container round5">
-        <div class="round-header">
-          <h2 class="round-title">⭐ ROUND 5 - Top 10 Showdown</h2>
-          <div class="round-stats">10 → 5 Peserta</div>
-        </div>
-
-        <div class="round-description">
-          <strong>Kembali ke Individual!</strong> 10 peserta terbaik bertanding
-          individual untuk mendapatkan 5 slot final.
-        </div>
-
-        <div class="participants-flow">
-          <div class="participant-group">
-            <div class="group-label">Top 10</div>
-            <div class="group-count">10</div>
+          <!-- Participants Flow -->
+          <div class="bg-gray-50 rounded-xl p-4 md:p-6 mb-6">
+            <div
+              class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4"
+            >
+              <div
+                class="text-center bg-white p-4 rounded-lg shadow-md min-w-24 md:min-w-32"
+              >
+                <div class="text-sm text-gray-500 mb-1">Peserta Awal</div>
+                <div class="text-2xl md:text-3xl font-bold text-blue-600">
+                  32
+                </div>
+              </div>
+              <div
+                class="text-2xl md:text-3xl text-blue-500 animate-bounce-slow"
+              >
+                <span class="hidden md:inline">➡️</span>
+                <span class="md:hidden">⬇️</span>
+              </div>
+              <div
+                class="text-center bg-white p-4 rounded-lg shadow-md min-w-24 md:min-w-32"
+              >
+                <div class="text-sm text-gray-500 mb-1">Lolos Round 1</div>
+                <div class="text-2xl md:text-3xl font-bold text-green-600">
+                  16
+                </div>
+              </div>
+              <div
+                class="text-2xl md:text-3xl text-blue-500 animate-bounce-slow"
+              >
+                <span class="hidden md:inline">➡️</span>
+                <span class="md:hidden">⬇️</span>
+              </div>
+              <div
+                class="text-center bg-white p-4 rounded-lg shadow-md min-w-24 md:min-w-32"
+              >
+                <div class="text-sm text-gray-500 mb-1">Kalah Round 1</div>
+                <div class="text-2xl md:text-3xl font-bold text-red-600">
+                  16
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="arrow">➡️</div>
-          <div class="participant-group">
-            <div class="group-label">Top 5</div>
-            <div class="group-count">5</div>
-          </div>
-          <div class="arrow">➡️</div>
-          <div class="participant-group">
-            <div class="group-label">Eliminasi</div>
-            <div class="group-count">5</div>
+
+          <!-- Challenge Details -->
+          <div class="round-gradient-1 rounded-xl p-6 text-white">
+            <h4 class="text-xl md:text-2xl font-bold mb-4 text-center">
+              🎯 Format Tantangan Individual
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div
+                class="challenge-card bg-white bg-opacity-20 p-4 rounded-lg text-center"
+              >
+                <h5 class="text-lg md:text-xl font-bold mb-2">🔢 NUMERIC</h5>
+                <p class="text-sm md:text-base">
+                  Speed Math, Number Pattern, Logic Problems, Mental Calculation
+                </p>
+              </div>
+              <div
+                class="challenge-card bg-white bg-opacity-20 p-4 rounded-lg text-center"
+              >
+                <h5 class="text-lg md:text-xl font-bold mb-2">🧩 SPATIAL</h5>
+                <p class="text-sm md:text-base">
+                  Shape Recognition, Pattern Blocks, 3D Visualization, Map
+                  Reading
+                </p>
+              </div>
+              <div
+                class="challenge-card bg-white bg-opacity-20 p-4 rounded-lg text-center"
+              >
+                <h5 class="text-lg md:text-xl font-bold mb-2">🧠 MEMORY</h5>
+                <p class="text-sm md:text-base">
+                  Sequence Memory, Visual Recall, Audio Memory, Story Memory
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="challenge-details">
-          <h4>🎯 Ultimate Individual Challenge</h4>
-          <p>
-            Tantangan paling sulit dengan format yang lebih komprehensif. Setiap
-            peserta harus menunjukkan kemampuan terbaiknya di semua kategori!
+        <!-- Round 2 -->
+        <div
+          class="scroll-reveal glass-effect rounded-2xl p-6 md:p-8 border-l-8 border-orange-500 hover:shadow-2xl transition-all duration-300"
+        >
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6"
+          >
+            <h2
+              class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-0"
+            >
+              🔄 ROUND 2 - Second Chance Battle
+            </h2>
+            <div
+              class="bg-orange-100 text-orange-800 px-4 py-2 rounded-full font-bold text-sm md:text-base"
+            >
+              16 → 8 Peserta
+            </div>
+          </div>
+
+          <p class="text-gray-700 text-lg mb-6">
+            <strong>Konsep:</strong> 16 peserta yang kalah di Round 1 mendapat
+            kesempatan kedua! Mereka bertanding lagi untuk mendapatkan 8 slot
+            tambahan.
           </p>
-        </div>
-      </div>
 
-      <div class="flow-connector">⬇️</div>
-
-      <!-- ROUND 6 -->
-      <div class="round-container round6">
-        <div class="round-header">
-          <h2 class="round-title">🏆 ROUND 6 - Semifinal</h2>
-          <div class="round-stats">5 → 3 Peserta</div>
-        </div>
-
-        <div class="round-description">
-          <strong>Penentuan Finalis!</strong> 5 peserta terbaik bertanding untuk
-          mendapatkan 3 slot final.
-        </div>
-
-        <div class="participants-flow">
-          <div class="participant-group">
-            <div class="group-label">Top 5</div>
-            <div class="group-count">5</div>
+          <!-- Participants Flow -->
+          <div class="bg-gray-50 rounded-xl p-4 md:p-6 mb-6">
+            <div
+              class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4"
+            >
+              <div
+                class="text-center bg-white p-4 rounded-lg shadow-md min-w-24 md:min-w-32"
+              >
+                <div class="text-sm text-gray-500 mb-1">Kalah Round 1</div>
+                <div class="text-2xl md:text-3xl font-bold text-red-600">
+                  16
+                </div>
+              </div>
+              <div
+                class="text-2xl md:text-3xl text-blue-500 animate-bounce-slow"
+              >
+                <span class="hidden md:inline">➡️</span>
+                <span class="md:hidden">⬇️</span>
+              </div>
+              <div
+                class="text-center bg-white p-4 rounded-lg shadow-md min-w-24 md:min-w-32"
+              >
+                <div class="text-sm text-gray-500 mb-1">8 Terbaik</div>
+                <div class="text-2xl md:text-3xl font-bold text-green-600">
+                  8
+                </div>
+              </div>
+              <div
+                class="text-2xl md:text-3xl text-blue-500 animate-bounce-slow"
+              >
+                <span class="hidden md:inline">➡️</span>
+                <span class="md:hidden">⬇️</span>
+              </div>
+              <div
+                class="text-center bg-white p-4 rounded-lg shadow-md min-w-24 md:min-w-32"
+              >
+                <div class="text-sm text-gray-500 mb-1">Eliminasi</div>
+                <div class="text-2xl md:text-3xl font-bold text-gray-600">
+                  8
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="arrow">➡️</div>
-          <div class="participant-group">
-            <div class="group-label">Finalis</div>
-            <div class="group-count">3</div>
-          </div>
-          <div class="arrow">➡️</div>
-          <div class="participant-group">
-            <div class="group-label">Posisi 4-5</div>
-            <div class="group-count">2</div>
+
+          <div
+            class="bg-red-500 text-white p-4 rounded-xl text-center font-bold"
+          >
+            ⚡ Kesempatan Terakhir: Format yang sama namun lebih intens!
           </div>
         </div>
 
-        <div class="challenge-details">
-          <h4>🎯 Pre-Final Challenge</h4>
-          <p>
-            Kombinasi semua kategori dengan tingkat kesulitan maksimal. Waktu
-            terbatas, tekanan tinggi!
+        <!-- Round 3 -->
+        <div
+          class="scroll-reveal glass-effect rounded-2xl p-6 md:p-8 border-l-8 border-yellow-500 hover:shadow-2xl transition-all duration-300"
+        >
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6"
+          >
+            <h2
+              class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-0"
+            >
+              👥 ROUND 3 - Team Challenge
+            </h2>
+            <div
+              class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full font-bold text-sm md:text-base"
+            >
+              24 → 20 Peserta
+            </div>
+          </div>
+
+          <p class="text-gray-700 text-lg mb-6">
+            <strong>Game Changer!</strong> 16 pemenang Round 1 + 8 pemenang
+            Round 2 = 24 peserta. Kini saatnya tantangan berkelompok!
           </p>
+
+          <!-- Team Formation -->
+          <div class="bg-gray-50 rounded-xl p-6 mb-6">
+            <h4 class="text-xl font-bold text-center mb-4">
+              🎪 Pembagian Kelompok
+            </h4>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              <div
+                class="bg-white p-4 rounded-lg shadow-md text-center border-4 border-blue-500"
+              >
+                <h5 class="font-bold">Kelompok A</h5>
+                <p class="text-sm text-gray-600">4 peserta</p>
+              </div>
+              <div
+                class="bg-white p-4 rounded-lg shadow-md text-center border-4 border-blue-500"
+              >
+                <h5 class="font-bold">Kelompok B</h5>
+                <p class="text-sm text-gray-600">4 peserta</p>
+              </div>
+              <div
+                class="bg-white p-4 rounded-lg shadow-md text-center border-4 border-blue-500"
+              >
+                <h5 class="font-bold">Kelompok C</h5>
+                <p class="text-sm text-gray-600">4 peserta</p>
+              </div>
+              <div
+                class="bg-white p-4 rounded-lg shadow-md text-center border-4 border-blue-500"
+              >
+                <h5 class="font-bold">Kelompok D</h5>
+                <p class="text-sm text-gray-600">4 peserta</p>
+              </div>
+              <div
+                class="bg-white p-4 rounded-lg shadow-md text-center border-4 border-blue-500"
+              >
+                <h5 class="font-bold">Kelompok E</h5>
+                <p class="text-sm text-gray-600">4 peserta</p>
+              </div>
+              <div
+                class="bg-white p-4 rounded-lg shadow-md text-center border-4 border-blue-500"
+              >
+                <h5 class="font-bold">Kelompok F</h5>
+                <p class="text-sm text-gray-600">4 peserta</p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="bg-red-500 text-white p-4 rounded-xl text-center font-bold"
+          >
+            ❌ 1 Kelompok Terburuk Eliminasi (4 peserta)
+          </div>
+        </div>
+
+        <!-- Round 4 -->
+        <div
+          class="scroll-reveal glass-effect rounded-2xl p-6 md:p-8 border-l-8 border-green-500 hover:shadow-2xl transition-all duration-300"
+        >
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6"
+          >
+            <h2
+              class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-0"
+            >
+              🎖️ ROUND 4 - Elite Groups
+            </h2>
+            <div
+              class="bg-green-100 text-green-800 px-4 py-2 rounded-full font-bold text-sm md:text-base"
+            >
+              20 → 10 Peserta
+            </div>
+          </div>
+
+          <p class="text-gray-700 text-lg mb-6">
+            <strong>Semi Elite Phase:</strong> 20 peserta terbaik dibagi menjadi
+            4 kelompok. Hanya 2 kelompok terbaik yang lolos!
+          </p>
+
+          <!-- Elite Groups -->
+          <div class="bg-gray-50 rounded-xl p-6 mb-6">
+            <h4 class="text-xl font-bold text-center mb-4">
+              🏅 Pembagian Kelompok Elite
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div
+                class="bg-white p-4 rounded-lg shadow-md text-center border-4 border-purple-500"
+              >
+                <h5 class="font-bold">Kelompok Alpha</h5>
+                <p class="text-sm text-gray-600">5 peserta</p>
+              </div>
+              <div
+                class="bg-white p-4 rounded-lg shadow-md text-center border-4 border-purple-500"
+              >
+                <h5 class="font-bold">Kelompok Beta</h5>
+                <p class="text-sm text-gray-600">5 peserta</p>
+              </div>
+              <div
+                class="bg-white p-4 rounded-lg shadow-md text-center border-4 border-purple-500"
+              >
+                <h5 class="font-bold">Kelompok Gamma</h5>
+                <p class="text-sm text-gray-600">5 peserta</p>
+              </div>
+              <div
+                class="bg-white p-4 rounded-lg shadow-md text-center border-4 border-purple-500"
+              >
+                <h5 class="font-bold">Kelompok Delta</h5>
+                <p class="text-sm text-gray-600">5 peserta</p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="bg-red-500 text-white p-4 rounded-xl text-center font-bold"
+          >
+            ❌ 2 Kelompok Terburuk Eliminasi (10 peserta)
+          </div>
+        </div>
+
+        <!-- Round 5 -->
+        <div
+          class="scroll-reveal glass-effect rounded-2xl p-6 md:p-8 border-l-8 border-blue-500 hover:shadow-2xl transition-all duration-300"
+        >
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6"
+          >
+            <h2
+              class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-0"
+            >
+              ⭐ ROUND 5 - Top 10 Showdown
+            </h2>
+            <div
+              class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-bold text-sm md:text-base"
+            >
+              10 → 5 Peserta
+            </div>
+          </div>
+
+          <p class="text-gray-700 text-lg mb-6">
+            <strong>Kembali ke Individual!</strong> 10 peserta terbaik
+            bertanding individual untuk mendapatkan 5 slot final.
+          </p>
+
+          <!-- Challenge Info -->
+          <div class="round-gradient-5 rounded-xl p-6 text-white text-center">
+            <h4 class="text-xl font-bold mb-2">
+              🎯 Ultimate Individual Challenge
+            </h4>
+            <p>
+              Tantangan paling sulit dengan format yang lebih komprehensif.
+              Setiap peserta harus menunjukkan kemampuan terbaiknya di semua
+              kategori!
+            </p>
+          </div>
+        </div>
+
+        <!-- Round 6 -->
+        <div
+          class="scroll-reveal glass-effect rounded-2xl p-6 md:p-8 border-l-8 border-purple-500 hover:shadow-2xl transition-all duration-300"
+        >
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6"
+          >
+            <h2
+              class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-0"
+            >
+              🏆 ROUND 6 - Semifinal
+            </h2>
+            <div
+              class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full font-bold text-sm md:text-base"
+            >
+              5 → 3 Peserta
+            </div>
+          </div>
+
+          <p class="text-gray-700 text-lg mb-6">
+            <strong>Penentuan Finalis!</strong> 5 peserta terbaik bertanding
+            untuk mendapatkan 3 slot final.
+          </p>
+
+          <div class="round-gradient-6 rounded-xl p-6 text-white text-center">
+            <h4 class="text-xl font-bold mb-2">🎯 Pre-Final Challenge</h4>
+            <p>
+              Kombinasi semua kategori dengan tingkat kesulitan maksimal. Waktu
+              terbatas, tekanan tinggi!
+            </p>
+          </div>
+        </div>
+
+        <!-- Round 7 - Final -->
+        <div
+          class="scroll-reveal glass-effect rounded-2xl p-6 md:p-8 border-l-8 border-gray-800 hover:shadow-2xl transition-all duration-300"
+        >
+          <div class="round-gradient-7 rounded-xl p-6 md:p-8 text-white">
+            <div
+              class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6"
+            >
+              <h2 class="text-2xl md:text-3xl font-bold mb-2 md:mb-0">
+                👑 ROUND 7 - GRAND FINAL
+              </h2>
+              <div
+                class="bg-white bg-opacity-20 px-4 py-2 rounded-full font-bold text-sm md:text-base"
+              >
+                3 Finalis
+              </div>
+            </div>
+
+            <p class="text-lg mb-6">
+              <strong>The Ultimate Showdown!</strong> 3 finalis terbaik
+              bertarung untuk menentukan juara 1, 2, dan 3.
+            </p>
+
+            <!-- Final Podium -->
+            <div
+              class="flex flex-col md:flex-row justify-center items-end gap-4 md:gap-8 my-8"
+            >
+              <div
+                class="order-2 md:order-1 bg-gradient-to-b from-gray-300 to-gray-500 text-white p-6 rounded-lg text-center h-24 md:h-32 flex flex-col justify-center min-w-32"
+              >
+                <div class="text-2xl md:text-3xl mb-2">🥈</div>
+                <div class="font-bold">JUARA 2</div>
+              </div>
+              <div
+                class="order-1 md:order-2 bg-gradient-to-b from-yellow-300 to-yellow-600 text-white p-6 rounded-lg text-center h-32 md:h-40 flex flex-col justify-center min-w-32"
+              >
+                <div class="text-3xl md:text-4xl mb-2">🥇</div>
+                <div class="font-bold text-lg">JUARA 1</div>
+              </div>
+              <div
+                class="order-3 bg-gradient-to-b from-orange-400 to-orange-700 text-white p-6 rounded-lg text-center h-20 md:h-28 flex flex-col justify-center min-w-32"
+              >
+                <div class="text-2xl md:text-3xl mb-2">🥉</div>
+                <div class="font-bold">JUARA 3</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="flow-connector">⬇️</div>
-
-      <!-- ROUND 7 - FINAL -->
-      <div class="round-container round7">
-        <div class="round-header">
-          <h2 class="round-title">👑 ROUND 7 - GRAND FINAL</h2>
-          <div class="round-stats">3 Finalis</div>
-        </div>
-
-        <div class="round-description">
-          <strong>The Ultimate Showdown!</strong> 3 finalis terbaik bertarung
-          untuk menentukan juara 1, 2, dan 3.
-        </div>
-
-        <div class="challenge-details">
-          <h4>🎯 Final Championship Challenge</h4>
-          <div class="challenge-grid">
-            <div class="challenge-item">
-              <h5>🔢 NUMERIC MASTER</h5>
-              <p>Advanced math challenges</p>
-            </div>
-            <div class="challenge-item">
-              <h5>🧩 SPATIAL GENIUS</h5>
-              <p>Complex 3D puzzles</p>
-            </div>
-            <div class="challenge-item">
-              <h5>🧠 MEMORY CHAMPION</h5>
-              <p>Ultimate recall tests</p>
-            </div>
+      <!-- Tournament Statistics -->
+      <div class="scroll-reveal glass-effect rounded-2xl p-6 md:p-8 mt-8">
+        <h3
+          class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6"
+        >
+          📊 Statistik Tournament
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <div
+            class="bg-gradient-to-b from-blue-400 to-blue-600 text-white p-6 rounded-xl text-center"
+          >
+            <div class="text-3xl md:text-4xl font-bold mb-2">7</div>
+            <div class="text-sm md:text-base">Total Round</div>
           </div>
-        </div>
-
-        <div class="final-podium">
-          <div class="podium-place place-2">
-            <h3>🥈</h3>
-            <p>JUARA 2</p>
+          <div
+            class="bg-gradient-to-b from-green-400 to-green-600 text-white p-6 rounded-xl text-center"
+          >
+            <div class="text-2xl md:text-3xl font-bold mb-2">32→3</div>
+            <div class="text-sm md:text-base">Peserta Journey</div>
           </div>
-          <div class="podium-place place-1">
-            <h3>🥇</h3>
-            <p>JUARA 1</p>
+          <div
+            class="bg-gradient-to-b from-purple-400 to-purple-600 text-white p-6 rounded-xl text-center"
+          >
+            <div class="text-3xl md:text-4xl font-bold mb-2">~45</div>
+            <div class="text-sm md:text-base">Total Matches</div>
           </div>
-          <div class="podium-place place-3">
-            <h3>🥉</h3>
-            <p>JUARA 3</p>
+          <div
+            class="bg-gradient-to-b from-red-400 to-red-600 text-white p-6 rounded-xl text-center"
+          >
+            <div class="text-3xl md:text-4xl font-bold mb-2">3-4</div>
+            <div class="text-sm md:text-base">Hari Event</div>
           </div>
         </div>
       </div>
 
-      <div class="tournament-stats">
-        <h3>📊 Statistik Tournament</h3>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-number">7</div>
-            <p>Total Round</p>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">32→3</div>
-            <p>Peserta Journey</p>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">~45</div>
-            <p>Total Matches</p>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">3-4</div>
-            <p>Hari Event</p>
+      <!-- Advantages -->
+      <div class="scroll-reveal glass-effect rounded-2xl p-6 md:p-8 mt-8">
+        <div
+          class="bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl p-6 md:p-8 text-white"
+        >
+          <h3 class="text-2xl md:text-3xl font-bold mb-6 text-center">
+            ✨ Keunggulan Format Ini
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-start space-x-3">
+              <span class="text-2xl">✅</span>
+              <div>
+                <strong>Fair Elimination:</strong> Sistem bertahap mengurangi
+                faktor keberuntungan
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-2xl">✅</span>
+              <div>
+                <strong>Excitement:</strong> Format yang tidak predictable,
+                selalu ada surprises!
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-2xl">✅</span>
+              <div>
+                <strong>Learning Experience:</strong> Peserta belajar dari
+                berbagai jenis tantangan
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="text-2xl">✅</span>
+              <div>
+                <strong>Character Building:</strong> Mengajarkan resilience dan
+                adaptability
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="advantages">
-        <h3>✨ Keunggulan Format Ini</h3>
-        <ul>
-          <li>
-            <strong>Second Chance:</strong> Round 2 memberi kesempatan kedua
-            bagi yang gugup di awal
-          </li>
-          <li>
-            <strong>Variety:</strong> Kombinasi individual dan kelompok
-            menciptakan dinamika menarik
-          </li>
-          <li>
-            <strong>Team Building:</strong> Round 3 & 4 mengajarkan kerjasama
-            tim
-          </li>
-          <li>
-            <strong>Progressive Difficulty:</strong> Tingkat kesulitan meningkat
-            bertahap
-          </li>
-          <li>
-            <strong>Fair Elimination:</strong> Sistem bertahap mengurangi faktor
-            keberuntungan
-          </li>
-          <li>
-            <strong>Excitement:</strong> Format yang tidak predictable, selalu
-            ada surprises!
-          </li>
-          <li>
-            <strong>Learning Experience:</strong> Peserta belajar dari berbagai
-            jenis tantangan
-          </li>
-          <li>
-            <strong>Character Building:</strong> Mengajarkan resilience dan
-            adaptability
-          </li>
-        </ul>
+      <!-- Interactive Progress Bar -->
+      <div class="scroll-reveal glass-effect rounded-2xl p-6 md:p-8 mt-8">
+        <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">
+          🎯 Tournament Progress Tracker
+        </h3>
+        <div id="progress-container" class="space-y-4">
+          <!-- Progress will be generated by JavaScript -->
+        </div>
+        <div class="mt-6 text-center">
+          <button
+            id="simulate-btn"
+            class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-3 rounded-full font-bold text-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+          >
+            🎮 Simulasi Tournament
+          </button>
+        </div>
+      </div>
+
+      <!-- Tournament Timeline -->
+      <div class="scroll-reveal glass-effect rounded-2xl p-6 md:p-8 mt-8">
+        <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">
+          📅 Timeline Tournament
+        </h3>
+        <div class="relative">
+          <!-- Timeline line -->
+          <div
+            class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-1 bg-gradient-to-b from-blue-500 to-purple-500 h-full rounded-full"
+          ></div>
+
+          <!-- Timeline items -->
+          <div class="space-y-8 ml-12 md:ml-0">
+            <div class="flex flex-col md:flex-row items-start md:items-center">
+              <div class="md:w-1/2 md:text-right md:pr-8">
+                <div
+                  class="bg-red-100 text-red-800 px-4 py-2 rounded-lg inline-block"
+                >
+                  <strong>Hari 1 (Pagi)</strong><br />
+                  Round 1 & 2 - Individual Battles
+                </div>
+              </div>
+              <div
+                class="hidden md:block w-4 h-4 bg-red-500 rounded-full border-4 border-white shadow-lg relative z-10"
+              ></div>
+              <div class="md:w-1/2 md:pl-8"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center">
+              <div class="md:w-1/2 md:text-right md:pr-8"></div>
+              <div
+                class="hidden md:block w-4 h-4 bg-yellow-500 rounded-full border-4 border-white shadow-lg relative z-10"
+              ></div>
+              <div class="md:w-1/2 md:pl-8">
+                <div
+                  class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg inline-block"
+                >
+                  <strong>Hari 1 (Sore)</strong><br />
+                  Round 3 - Team Challenge Formation
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center">
+              <div class="md:w-1/2 md:text-right md:pr-8">
+                <div
+                  class="bg-green-100 text-green-800 px-4 py-2 rounded-lg inline-block"
+                >
+                  <strong>Hari 2</strong><br />
+                  Round 4 & 5 - Elite Phases
+                </div>
+              </div>
+              <div
+                class="hidden md:block w-4 h-4 bg-green-500 rounded-full border-4 border-white shadow-lg relative z-10"
+              ></div>
+              <div class="md:w-1/2 md:pl-8"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center">
+              <div class="md:w-1/2 md:text-right md:pr-8"></div>
+              <div
+                class="hidden md:block w-4 h-4 bg-purple-500 rounded-full border-4 border-white shadow-lg relative z-10"
+              ></div>
+              <div class="md:w-1/2 md:pl-8">
+                <div
+                  class="bg-purple-100 text-purple-800 px-4 py-2 rounded-lg inline-block"
+                >
+                  <strong>Hari 3</strong><br />
+                  Round 6 & 7 - Semifinal & Grand Final
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="glass-effect rounded-2xl p-6 md:p-8 mt-8 text-center">
+        <div
+          class="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent text-xl md:text-2xl font-bold mb-4"
+        >
+          Clash of Champions SD - Format Tournament Terdepan
+        </div>
+        <p class="text-gray-600 mb-4">
+          Menggabungkan kompetisi individual dan tim untuk pengalaman tournament
+          yang tak terlupakan
+        </p>
+        <div class="flex justify-center space-x-4 text-2xl">
+          <span class="animate-bounce-slow">🏆</span>
+          <span class="animate-pulse-slow">⭐</span>
+          <span class="animate-bounce-slow">🎯</span>
+          <span class="animate-pulse-slow">🚀</span>
+        </div>
       </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/20 bg-slate-900/50 glass-effect mt-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div
+          class="flex flex-col lg:flex-row justify-between items-center gap-6"
+        >
+          <div class="text-center lg:text-left">
+            <h4 class="text-white font-bold mb-2">
+              Double Elimination Format Tournament Hybrid
+            </h4>
+            <p class="text-slate-300 text-sm">
+              Clash of Champions SD - Kompetisi Numeric, Spatial & Memory
+            </p>
+          </div>
+
+          <div class="flex items-center gap-6">
+            <a
+              href="index.html"
+              class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:bg-white/10"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 16l-4-4m0 0l4-4m-4 4h18"
+                />
+              </svg>
+              Kembali ke Dashboard
+            </a>
+
+            <div class="text-slate-400 text-sm">
+              © <span id="year"></span> .callsamm
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Scroll reveal animation
+      function revealOnScroll() {
+        const reveals = document.querySelectorAll(".scroll-reveal");
+
+        reveals.forEach((reveal) => {
+          const windowHeight = window.innerHeight;
+          const revealTop = reveal.getBoundingClientRect().top;
+          const revealPoint = 100;
+
+          if (revealTop < windowHeight - revealPoint) {
+            reveal.classList.add("active");
+          }
+        });
+      }
+
+      window.addEventListener("scroll", revealOnScroll);
+      revealOnScroll(); // Initial check
+
+      // Tournament Progress Tracker
+      function createProgressTracker() {
+        const progressContainer = document.getElementById("progress-container");
+        const rounds = [
+          {
+            name: "Round 1",
+            participants: 32,
+            survivors: 16,
+            color: "bg-red-500",
+          },
+          {
+            name: "Round 2",
+            participants: 16,
+            survivors: 8,
+            color: "bg-orange-500",
+          },
+          {
+            name: "Round 3",
+            participants: 24,
+            survivors: 20,
+            color: "bg-yellow-500",
+          },
+          {
+            name: "Round 4",
+            participants: 20,
+            survivors: 10,
+            color: "bg-green-500",
+          },
+          {
+            name: "Round 5",
+            participants: 10,
+            survivors: 5,
+            color: "bg-blue-500",
+          },
+          {
+            name: "Round 6",
+            participants: 5,
+            survivors: 3,
+            color: "bg-purple-500",
+          },
+          {
+            name: "Round 7",
+            participants: 3,
+            survivors: 3,
+            color: "bg-gray-800",
+          },
+        ];
+
+        rounds.forEach((round, index) => {
+          const progressBar = document.createElement("div");
+          progressBar.className =
+            "bg-gray-200 rounded-full h-8 relative overflow-hidden";
+
+          const percentage = (round.survivors / 32) * 100;
+
+          progressBar.innerHTML = `
+                    <div class="${round.color} h-full rounded-full transition-all duration-1000 ease-out" style="width: ${percentage}%"></div>
+                    <div class="absolute inset-0 flex items-center justify-between px-4 text-sm font-bold">
+                        <span class="text-gray-700">${round.name}</span>
+                        <span class="text-white mix-blend-difference">${round.participants} → ${round.survivors}</span>
+                    </div>
+                `;
+
+          progressContainer.appendChild(progressBar);
+        });
+      }
+
+      // Tournament Simulation
+      function simulateTournament() {
+        const button = document.getElementById("simulate-btn");
+        const originalText = button.innerHTML;
+
+        button.innerHTML = "⏳ Simulasi Berjalan...";
+        button.disabled = true;
+
+        // Animate progress bars sequentially
+        const progressBars = document.querySelectorAll(
+          "#progress-container > div > div"
+        );
+
+        progressBars.forEach((bar, index) => {
+          setTimeout(() => {
+            bar.style.width = "0%";
+            setTimeout(() => {
+              const targetWidth = bar.style.width;
+              bar.style.width = targetWidth;
+            }, 100);
+          }, index * 500);
+        });
+
+        // Reset button after animation
+        setTimeout(() => {
+          button.innerHTML = originalText;
+          button.disabled = false;
+        }, progressBars.length * 500 + 1000);
+      }
+
+      // Particle animation for background
+      function createParticles() {
+        const particleCount = 50;
+        const particles = [];
+
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement("div");
+          particle.className =
+            "fixed w-2 h-2 bg-white opacity-20 rounded-full pointer-events-none";
+          particle.style.left = Math.random() * window.innerWidth + "px";
+          particle.style.top = Math.random() * window.innerHeight + "px";
+          particle.style.animation = `float ${
+            3 + Math.random() * 4
+          }s ease-in-out infinite`;
+          particle.style.animationDelay = Math.random() * 4 + "s";
+
+          document.body.appendChild(particle);
+          particles.push(particle);
+        }
+
+        // Clean up particles on resize
+        window.addEventListener("resize", () => {
+          particles.forEach((particle) => {
+            particle.style.left = Math.random() * window.innerWidth + "px";
+          });
+        });
+      }
+
+      // Smooth scrolling for internal links
+      function smoothScroll() {
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+              target.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          });
+        });
+      }
+
+      // Initialize all features
+      document.addEventListener("DOMContentLoaded", function () {
+        createProgressTracker();
+        createParticles();
+        smoothScroll();
+
+        // Add event listener for simulation button
+        document
+          .getElementById("simulate-btn")
+          .addEventListener("click", simulateTournament);
+
+        // Add hover effects to cards
+        document.querySelectorAll(".challenge-card").forEach((card) => {
+          card.addEventListener("mouseenter", function () {
+            this.style.transform = "translateY(-5px) scale(1.02)";
+            this.style.boxShadow = "0 10px 25px rgba(0,0,0,0.15)";
+          });
+
+          card.addEventListener("mouseleave", function () {
+            this.style.transform = "translateY(0) scale(1)";
+            this.style.boxShadow = "";
+          });
+        });
+
+        // Easter egg: Konami code
+        let konamiCode = [];
+        const konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+
+        document.addEventListener("keydown", function (e) {
+          konamiCode.push(e.keyCode);
+          if (konamiCode.length > konami.length) {
+            konamiCode.shift();
+          }
+
+          if (konamiCode.toString() === konami.toString()) {
+            // Activate special effects
+            document.body.style.animation = "rainbow 2s infinite";
+            setTimeout(() => {
+              document.body.style.animation = "";
+              alert("🎉 COC SD Tournament Master Mode Activated! 🎉");
+            }, 2000);
+          }
+        });
+      });
+
+      // Add rainbow keyframe for easter egg
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes rainbow {
+                0% { filter: hue-rotate(0deg); }
+                25% { filter: hue-rotate(90deg); }
+                50% { filter: hue-rotate(180deg); }
+                75% { filter: hue-rotate(270deg); }
+                100% { filter: hue-rotate(360deg); }
+            }
+        `;
+      document.head.appendChild(style);
+
+      // Performance optimization: Lazy loading for animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = "running";
+          } else {
+            entry.target.style.animationPlayState = "paused";
+          }
+        });
+      });
+
+      // Apply observer to animated elements
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .querySelectorAll(".animate-bounce-slow, .animate-pulse-slow")
+          .forEach((el) => {
+            observer.observe(el);
+          });
+      });
+    </script>
   </body>
 </html>
