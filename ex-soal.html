@@ -1,457 +1,1590 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>COC EX-SOAL</title>
+    <title>COC EX-SOAL • Contoh Soal & Tantangan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: "#f3f4ff",
+                100: "#e8eaff",
+                500: "#6366f1",
+                600: "#7c3aed",
+                700: "#5b21b6",
+              },
+              slate: {
+                200: "#e2e8f0",
+                300: "#cbd5e1",
+                400: "#94a3b8",
+                600: "#475569",
+                700: "#334155",
+                800: "#1e293b",
+                900: "#0f172a",
+                950: "#020617",
+              },
+              success: {
+                100: "#d4edda",
+                600: "#28a745",
+                700: "#155724",
+              },
+              warning: {
+                100: "#fff3cd",
+                600: "#ffc107",
+                700: "#856404",
+              },
+              danger: {
+                100: "#f8d7da",
+                600: "#dc3545",
+                700: "#721c24",
+              },
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "bounce-slow": "bounce 3s infinite",
+              "scale-in": "scaleIn 0.5s ease-out",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0px)" },
+                "50%": { transform: "translateY(-15px)" },
+              },
+              scaleIn: {
+                "0%": { transform: "scale(0.8)", opacity: "0" },
+                "100%": { transform: "scale(1)", opacity: "1" },
+              },
+            },
+          },
+        },
+      };
+    </script>
     <style>
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        margin: 20px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: #333;
-        min-height: 100vh;
+        background: radial-gradient(
+            1200px 600px at 80% -10%,
+            rgba(103, 126, 234, 0.3),
+            transparent 60%
+          ),
+          radial-gradient(
+            1000px 500px at -10% 20%,
+            rgba(118, 75, 162, 0.2),
+            transparent 55%
+          ),
+          linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .glass-effect {
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+      .card-hover {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .card-hover:hover {
+        transform: translateY(-8px) scale(1.02);
+      }
+      .floating-shape {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0.1;
+      }
+      .text-gradient {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .category-gradient-numeric {
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+      }
+      .category-gradient-spatial {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+      }
+      .category-gradient-memory {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+      }
+      .visual-pattern {
+        font-family: "Courier New", monospace;
+        letter-spacing: 0.1em;
       }
 
-      .container {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        padding: 30px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
       }
 
-      h1 {
-        text-align: center;
-        color: #4a5568;
-        margin-bottom: 30px;
-        font-size: 2.5em;
-      }
-
-      .category-section {
-        margin: 30px 0;
-        background: white;
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        border-left: 8px solid;
-      }
-
-      .numeric {
-        border-left-color: #e74c3c;
-      }
-      .spatial {
-        border-left-color: #2ecc71;
-      }
-      .memory {
-        border-left-color: #3498db;
-      }
-
-      .category-header {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 25px;
-      }
-
-      .category-icon {
-        font-size: 2.5em;
-      }
-
-      .category-title {
-        font-size: 2em;
-        font-weight: bold;
-        margin: 0;
-      }
-
-      .level-container {
-        margin: 20px 0;
-        background: #f8f9fa;
-        border-radius: 10px;
-        padding: 20px;
-      }
-
-      .level-header {
-        background: linear-gradient(45deg, #667eea, #764ba2);
-        color: white;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-        text-align: center;
-        font-weight: bold;
-      }
-
-      .challenge-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-      }
-
-      .challenge-card {
-        background: white;
-        border: 2px solid #e9ecef;
-        border-radius: 10px;
-        padding: 20px;
-        transition: all 0.3s ease;
-      }
-
-      .challenge-card:hover {
-        border-color: #007bff;
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 123, 255, 0.2);
-      }
-
-      .challenge-title {
-        font-weight: bold;
-        color: #2c3e50;
-        margin-bottom: 10px;
-        font-size: 1.1em;
-      }
-
-      .challenge-content {
-        font-size: 1em;
-        line-height: 1.6;
-      }
-
-      .options {
-        margin: 10px 0;
-        padding: 10px;
-        background: #f8f9fa;
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
         border-radius: 5px;
       }
 
-      .answer {
-        color: #28a745;
-        font-weight: bold;
-        margin-top: 10px;
-      }
-
-      .team-challenge {
-        background: linear-gradient(45deg, #ff9a9e, #fecfef);
-        color: #2c3e50;
-        padding: 20px;
-        border-radius: 10px;
-        margin: 15px 0;
-      }
-
-      .difficulty-indicator {
-        display: inline-block;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 0.8em;
-        font-weight: bold;
-        margin-bottom: 10px;
-      }
-
-      .easy {
-        background: #d4edda;
-        color: #155724;
-      }
-      .medium {
-        background: #fff3cd;
-        color: #856404;
-      }
-      .hard {
-        background: #f8d7da;
-        color: #721c24;
-      }
-
-      .time-limit {
-        background: #17a2b8;
-        color: white;
-        padding: 5px 10px;
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #667eea, #764ba2);
         border-radius: 5px;
-        font-size: 0.9em;
-        float: right;
       }
 
-      .example-visual {
-        background: #e3f2fd;
-        border: 2px dashed #2196f3;
-        padding: 15px;
-        border-radius: 8px;
-        text-align: center;
-        margin: 10px 0;
-        font-family: monospace;
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #5a67d8, #6b46c1);
       }
 
-      .team-instruction {
-        background: #fff3e0;
-        border-left: 4px solid #ff9800;
-        padding: 15px;
-        margin: 10px 0;
-        border-radius: 0 8px 8px 0;
+      /* Animation for staggered reveal */
+      .stagger-animation {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: slideInUp 0.6s ease-out forwards;
       }
 
-      @media (max-width: 768px) {
-        .challenge-grid {
-          grid-template-columns: 1fr;
+      @keyframes slideInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Reduced motion preferences */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
         }
       }
     </style>
   </head>
-  <body>
-    <div class="container">
-      <h1>🎯 Contoh Soal/Tantangan</h1>
 
-      <!-- NUMERIC CHALLENGES -->
-      <div class="category-section numeric">
-        <div class="category-header">
-          <div class="category-icon">🔢</div>
-          <h2 class="category-title">NUMERIC CHALLENGES</h2>
-        </div>
+  <body class="min-h-screen text-slate-800 font-sans">
+    <!-- Background floating shapes -->
+    <div
+      class="floating-shape top-10 left-5 w-20 h-20 bg-primary-600 rounded-full blur-xl animate-pulse-slow"
+    ></div>
+    <div
+      class="floating-shape top-32 right-10 w-16 h-16 bg-primary-500 rounded-full blur-lg animate-float"
+    ></div>
+    <div
+      class="floating-shape bottom-20 left-1/4 w-12 h-12 bg-primary-400 rounded-full blur-md animate-bounce-slow"
+    ></div>
 
-        <!-- Individual Level -->
-        <div class="level-container">
-          <div class="level-header">INDIVIDUAL - Round 1, 2, 5, 6, 7</div>
-
-          <div class="challenge-grid">
-            <div class="challenge-card">
-              <div class="difficulty-indicator easy">MUDAH</div>
-              <div class="time-limit">⏱️ 2 menit</div>
-              <div class="challenge-title">Speed Math</div>
-              <div class="challenge-content">
-                Hitung secepat mungkin:<br />
-                • 25 + 17 = ?<br />
-                • 48 - 19 = ?<br />
-                • 6 × 7 = ?<br />
-                • 72 ÷ 8 = ?<br />
-                • 15 + 28 - 13 = ?
-              </div>
-              <div class="answer">Jawaban: 42, 29, 42, 9, 30</div>
-            </div>
-
-            <div class="challenge-card">
-              <div class="difficulty-indicator medium">SEDANG</div>
-              <div class="time-limit">⏱️ 3 menit</div>
-              <div class="challenge-title">Number Pattern</div>
-              <div class="challenge-content">
-                Lengkapi pola angka berikut:<br />
-                • 2, 4, 6, ?, 10<br />
-                • 1, 4, 7, ?, 13<br />
-                • 3, 6, 12, ?, 48<br />
-                • 100, 90, 80, ?, ?
-              </div>
-              <div class="answer">Jawaban: 8, 10, 24, 70&60</div>
-            </div>
-
-            <div class="challenge-card">
-              <div class="difficulty-indicator hard">SULIT</div>
-              <div class="time-limit">⏱️ 4 menit</div>
-              <div class="challenge-title">Logic Numbers</div>
-              <div class="challenge-content">
-                Andi memiliki kelereng 3 kali lebih banyak dari Budi. Budi
-                memiliki 12 kelereng. Jika mereka memberikan 8 kelereng kepada
-                Cici, berapa total kelereng mereka sekarang?
-              </div>
-              <div class="answer">Jawaban: 40 kelereng</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Team Level -->
-        <div class="level-container">
-          <div class="level-header">TEAM - Round 3 & 4</div>
-
-          <div class="team-challenge">
-            <div class="challenge-title">🤝 Math Relay Team</div>
-            <div class="team-instruction">
-              <strong>Format:</strong> 4 anggota tim, estafet matematis<br />
-              <strong>Aturan:</strong> Anggota 1 selesai → hasil diberikan ke
-              Anggota 2, dst.
-            </div>
-
-            <div class="challenge-content">
-              <strong>Anggota 1:</strong> 15 × 4 = ? (hasil = A)<br />
-              <strong>Anggota 2:</strong> A ÷ 6 = ? (hasil = B)<br />
-              <strong>Anggota 3:</strong> B + 23 = ? (hasil = C)<br />
-              <strong>Anggota 4:</strong> C × 2 = ? (FINAL ANSWER)
-            </div>
-            <div class="answer">Jawaban Tim: 66</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SPATIAL CHALLENGES -->
-      <div class="category-section spatial">
-        <div class="category-header">
-          <div class="category-icon">🧩</div>
-          <h2 class="category-title">SPATIAL CHALLENGES</h2>
-        </div>
-
-        <!-- Individual Level -->
-        <div class="level-container">
-          <div class="level-header">INDIVIDUAL - Round 1, 2, 5, 6, 7</div>
-
-          <div class="challenge-grid">
-            <div class="challenge-card">
-              <div class="difficulty-indicator easy">MUDAH</div>
-              <div class="time-limit">⏱️ 2 menit</div>
-              <div class="challenge-title">Shape Recognition</div>
-              <div class="challenge-content">
-                Bentuk mana yang sama dengan gambar yang diputar?
-                <div class="example-visual">
-                  Original: ⬟<br />
-                  A) ⬢ B) ⬟ C) ⬡ D) ⬠
-                </div>
-              </div>
-              <div class="answer">Jawaban: B</div>
-            </div>
-
-            <div class="challenge-card">
-              <div class="difficulty-indicator medium">SEDANG</div>
-              <div class="time-limit">⏱️ 3 menit</div>
-              <div class="challenge-title">Pattern Blocks</div>
-              <div class="challenge-content">
-                Susun 4 segitiga sama sisi untuk membentuk:
-                <div class="example-visual">
-                  Target: Bentuk Diamond Besar<br />
-                  △ △ △ △ → ◊
-                </div>
-                Gambar susunannya!
-              </div>
-            </div>
-
-            <div class="challenge-card">
-              <div class="difficulty-indicator hard">SULIT</div>
-              <div class="time-limit">⏱️ 4 menit</div>
-              <div class="challenge-title">3D Visualization</div>
-              <div class="challenge-content">
-                Jika kubus ini dilipat, sisi mana yang akan berhadapan dengan
-                sisi bertanda "X"?
-                <div class="example-visual">
-                  Jaring-jaring kubus:<br />
-                  &nbsp;&nbsp;[A]<br />
-                  [B][X][C][D]<br />
-                  &nbsp;&nbsp;[E]
-                </div>
-              </div>
-              <div class="answer">Jawaban: Sisi C</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Team Level -->
-        <div class="level-container">
-          <div class="level-header">TEAM - Round 3 & 4</div>
-
-          <div class="team-challenge">
-            <div class="challenge-title">🧩 Collaborative Puzzle</div>
-            <div class="team-instruction">
-              <strong>Format:</strong> Tim dapat 16 piece puzzle terpisah<br />
-              <strong>Aturan:</strong> Hanya boleh komunikasi verbal, tidak
-              boleh tukar piece
-            </div>
-
-            <div class="challenge-content">
-              <strong>Misi:</strong> Menyusun gambar "Peta Indonesia"<br />
-              <strong>Setiap anggota:</strong> Dapat 4 piece puzzle<br />
-              <strong>Tantangan:</strong> Koordinasi tanpa melihat piece
-              teman<br />
-              <strong>Waktu:</strong> 8 menit
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- MEMORY CHALLENGES -->
-      <div class="category-section memory">
-        <div class="category-header">
-          <div class="category-icon">🧠</div>
-          <h2 class="category-title">MEMORY CHALLENGES</h2>
-        </div>
-
-        <!-- Individual Level -->
-        <div class="level-container">
-          <div class="level-header">INDIVIDUAL - Round 1, 2, 5, 6, 7</div>
-
-          <div class="challenge-grid">
-            <div class="challenge-card">
-              <div class="difficulty-indicator easy">MUDAH</div>
-              <div class="time-limit">⏱️ 3 menit</div>
-              <div class="challenge-title">Sequence Memory</div>
-              <div class="challenge-content">
-                <strong>Fase 1:</strong> Lihat urutan warna (30 detik)<br />
-                <div class="example-visual">🔴 🟢 🔵 🟡 🔴 🟢</div>
-                <strong>Fase 2:</strong> Ulangi urutan yang sama
-              </div>
-            </div>
-
-            <div class="challenge-card">
-              <div class="difficulty-indicator medium">SEDANG</div>
-              <div class="time-limit">⏱️ 4 menit</div>
-              <div class="challenge-title">Visual Memory</div>
-              <div class="challenge-content">
-                <strong>Fase 1:</strong> Lihat 12 gambar hewan (45 detik)<br />
-                <strong>Fase 2:</strong> Gambar disembunyikan<br />
-                <strong>Fase 3:</strong> Sebutkan hewan yang TIDAK ada dalam
-                daftar:<br />
-                Gajah, Kucing, Ayam, Sapi, Kambing, Bebek
-              </div>
-            </div>
-
-            <div class="challenge-card">
-              <div class="difficulty-indicator hard">SULIT</div>
-              <div class="time-limit">⏱️ 5 menit</div>
-              <div class="challenge-title">Story Recall</div>
-              <div class="challenge-content">
-                Dengarkan cerita pendek (2 menit), lalu jawab:<br />
-                • Siapa nama tokoh utama?<br />
-                • Berapa umur tokoh tersebut?<br />
-                • Apa warna bajunya?<br />
-                • Ke mana dia pergi?<br />
-                • Apa yang dia beli?
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Team Level -->
-        <div class="level-container">
-          <div class="level-header">TEAM - Round 3 & 4</div>
-
-          <div class="team-challenge">
-            <div class="challenge-title">🔗 Memory Chain Team</div>
-            <div class="team-instruction">
-              <strong>Format:</strong> Estafet memori berkelompok<br />
-              <strong>Aturan:</strong> Setiap anggota menambah 1 item ke daftar
-            </div>
-
-            <div class="challenge-content">
-              <strong>Contoh tema: "Pergi ke Pasar"</strong><br />
-              <strong>Anggota 1:</strong> "Saya pergi ke pasar membeli apel"<br />
-              <strong>Anggota 2:</strong> "...membeli apel dan pisang"<br />
-              <strong>Anggota 3:</strong> "...apel, pisang, dan wortel"<br />
-              <strong>Anggota 4:</strong> "...apel, pisang, wortel, dan
-              telur"<br />
-              <strong>Target:</strong> 12 item tanpa kesalahan
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        style="
-          background: #2c3e50;
-          color: white;
-          padding: 25px;
-          border-radius: 15px;
-          margin-top: 30px;
-        "
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 max-w-7xl">
+      <!-- Header -->
+      <header
+        class="glass-effect bg-white/90 border border-white/20 rounded-3xl p-8 lg:p-12 mb-12 text-center relative overflow-hidden shadow-2xl"
       >
-        <h3>📋 Catatan Implementasi</h3>
-        <ul style="line-height: 1.8">
-          <li><strong>Scoring:</strong> Setiap kategori maksimal 100 poin</li>
-          <li><strong>Bonus:</strong> Kecepatan menyelesaikan +10 poin</li>
-          <li>
-            <strong>Team Scoring:</strong> Rata-rata individual + bonus
-            kerjasama
-          </li>
-          <li><strong>Tingkat Kesulitan:</strong> Meningkat setiap round</li>
-          <li>
-            <strong>Adaptasi:</strong> Soal disesuaikan usia dan kemampuan SD
-          </li>
-        </ul>
-      </div>
+        <!-- Decorative gradient overlay -->
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-primary-600/5 to-transparent pointer-events-none"
+        ></div>
+
+        <div class="relative z-10">
+          <!-- Badge -->
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-600/10 to-primary-500/10 border border-primary-500/20 rounded-full text-primary-700 text-sm font-semibold mb-6"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Contoh Soal & Tantangan COC
+          </div>
+
+          <!-- Title -->
+          <h1
+            class="text-4xl sm:text-5xl lg:text-6xl font-black mb-6 text-gradient leading-tight"
+          >
+            🎯 COC Challenge Examples
+          </h1>
+
+          <!-- Subtitle -->
+          <p
+            class="text-slate-600 text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed mb-8"
+          >
+            Kumpulan contoh soal dan tantangan dalam tiga kategori utama:
+            Numeric, Spatial, dan Memory Challenges untuk tingkat Sekolah Dasar
+          </p>
+
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-3 gap-4 max-w-md mx-auto">
+            <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
+              <div class="text-2xl font-bold text-red-600">🔢</div>
+              <div class="text-xs text-slate-600 mt-1">Numeric</div>
+            </div>
+            <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
+              <div class="text-2xl font-bold text-green-600">🧩</div>
+              <div class="text-xs text-slate-600 mt-1">Spatial</div>
+            </div>
+            <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
+              <div class="text-2xl font-bold text-blue-600">🧠</div>
+              <div class="text-xs text-slate-600 mt-1">Memory</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- NUMERIC CHALLENGES SECTION -->
+      <section class="mb-16 stagger-animation" style="animation-delay: 0.1s">
+        <div
+          class="glass-effect bg-white/95 border-l-8 border-red-500 rounded-2xl overflow-hidden shadow-xl"
+        >
+          <!-- Section Header -->
+          <div class="category-gradient-numeric text-white p-6 lg:p-8">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="text-4xl lg:text-5xl animate-bounce-slow">🔢</div>
+              <h2 class="text-2xl lg:text-3xl font-bold">NUMERIC CHALLENGES</h2>
+            </div>
+            <p class="text-red-100 text-sm lg:text-base opacity-90">
+              Tantangan matematika dan logika numerik untuk mengasah kemampuan
+              berhitung
+            </p>
+          </div>
+
+          <div class="p-6 lg:p-8">
+            <!-- Individual Level -->
+            <div class="mb-12">
+              <div
+                class="bg-gradient-to-r from-slate-700 to-slate-600 text-white text-center py-4 px-6 rounded-xl mb-8 shadow-lg"
+              >
+                <h3
+                  class="text-lg lg:text-xl font-bold flex items-center justify-center gap-2"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  INDIVIDUAL - Round 1, 2, 5, 6, 7
+                </h3>
+              </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Speed Math Card -->
+                <div
+                  class="card-hover bg-white border border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-red-300 group"
+                >
+                  <div class="flex items-start justify-between mb-4">
+                    <span
+                      class="inline-block px-3 py-1 bg-success-100 text-success-700 text-xs font-semibold rounded-full"
+                    >
+                      MUDAH
+                    </span>
+                    <div
+                      class="flex items-center gap-1 bg-blue-500 text-white px-2 py-1 rounded-lg text-xs font-medium"
+                    >
+                      <svg
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      2 menit
+                    </div>
+                  </div>
+
+                  <h4
+                    class="text-xl font-bold text-slate-800 mb-3 group-hover:text-red-600 transition-colors"
+                  >
+                    Speed Math ⚡
+                  </h4>
+
+                  <div class="text-slate-600 space-y-2 mb-4">
+                    <p class="font-medium mb-2">Hitung secepat mungkin:</p>
+                    <div
+                      class="bg-slate-50 p-3 rounded-lg font-mono text-sm space-y-1"
+                    >
+                      <div>• 25 + 17 = ?</div>
+                      <div>• 48 - 19 = ?</div>
+                      <div>• 6 × 7 = ?</div>
+                      <div>• 72 ÷ 8 = ?</div>
+                      <div>• 15 + 28 - 13 = ?</div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-success-100 border border-success-300 rounded-lg p-3"
+                  >
+                    <p class="text-success-700 font-semibold text-sm">
+                      ✓ Jawaban: 42, 29, 42, 9, 30
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Number Pattern Card -->
+                <div
+                  class="card-hover bg-white border border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-red-300 group"
+                >
+                  <div class="flex items-start justify-between mb-4">
+                    <span
+                      class="inline-block px-3 py-1 bg-warning-100 text-warning-700 text-xs font-semibold rounded-full"
+                    >
+                      SEDANG
+                    </span>
+                    <div
+                      class="flex items-center gap-1 bg-blue-500 text-white px-2 py-1 rounded-lg text-xs font-medium"
+                    >
+                      <svg
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      3 menit
+                    </div>
+                  </div>
+
+                  <h4
+                    class="text-xl font-bold text-slate-800 mb-3 group-hover:text-red-600 transition-colors"
+                  >
+                    Number Pattern 🔀
+                  </h4>
+
+                  <div class="text-slate-600 space-y-2 mb-4">
+                    <p class="font-medium mb-2">Lengkapi pola angka berikut:</p>
+                    <div
+                      class="bg-slate-50 p-3 rounded-lg font-mono text-sm space-y-1"
+                    >
+                      <div>• 2, 4, 6, ?, 10</div>
+                      <div>• 1, 4, 7, ?, 13</div>
+                      <div>• 3, 6, 12, ?, 48</div>
+                      <div>• 100, 90, 80, ?, ?</div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-success-100 border border-success-300 rounded-lg p-3"
+                  >
+                    <p class="text-success-700 font-semibold text-sm">
+                      ✓ Jawaban: 8, 10, 24, 70 & 60
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Logic Numbers Card -->
+                <div
+                  class="card-hover bg-white border border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-red-300 group lg:col-span-2 xl:col-span-1"
+                >
+                  <div class="flex items-start justify-between mb-4">
+                    <span
+                      class="inline-block px-3 py-1 bg-danger-100 text-danger-700 text-xs font-semibold rounded-full"
+                    >
+                      SULIT
+                    </span>
+                    <div
+                      class="flex items-center gap-1 bg-blue-500 text-white px-2 py-1 rounded-lg text-xs font-medium"
+                    >
+                      <svg
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      4 menit
+                    </div>
+                  </div>
+
+                  <h4
+                    class="text-xl font-bold text-slate-800 mb-3 group-hover:text-red-600 transition-colors"
+                  >
+                    Logic Numbers 🤔
+                  </h4>
+
+                  <div class="text-slate-600 space-y-3 mb-4">
+                    <div class="bg-slate-50 p-4 rounded-lg">
+                      <p class="text-sm leading-relaxed">
+                        Andi memiliki kelereng 3 kali lebih banyak dari Budi.
+                        Budi memiliki 12 kelereng. Jika mereka memberikan 8
+                        kelereng kepada Cici, berapa total kelereng mereka
+                        sekarang?
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-success-100 border border-success-300 rounded-lg p-3"
+                  >
+                    <p class="text-success-700 font-semibold text-sm">
+                      ✓ Jawaban: 40 kelereng
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Team Level -->
+            <div>
+              <div
+                class="bg-gradient-to-r from-slate-700 to-slate-600 text-white text-center py-4 px-6 rounded-xl mb-8 shadow-lg"
+              >
+                <h3
+                  class="text-lg lg:text-xl font-bold flex items-center justify-center gap-2"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"
+                    />
+                  </svg>
+                  TEAM - Round 3 & 4
+                </h3>
+              </div>
+
+              <div
+                class="bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100 border border-pink-200 rounded-2xl p-8 shadow-lg"
+              >
+                <div class="flex items-center gap-3 mb-6">
+                  <div class="text-3xl">🤝</div>
+                  <h4 class="text-2xl font-bold text-slate-800">
+                    Math Relay Team
+                  </h4>
+                </div>
+
+                <div
+                  class="bg-orange-50 border-l-4 border-orange-400 p-4 rounded-r-xl mb-6"
+                >
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <strong class="text-orange-800">Format:</strong>
+                      <span class="text-orange-700">
+                        4 anggota tim, estafet matematis</span
+                      >
+                    </div>
+                    <div>
+                      <strong class="text-orange-800">Aturan:</strong>
+                      <span class="text-orange-700">
+                        Anggota 1 selesai → hasil ke Anggota 2, dst.</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-white rounded-xl p-6 shadow-inner border border-slate-200"
+                >
+                  <div class="space-y-3 font-mono text-sm">
+                    <div class="flex items-center gap-3">
+                      <span
+                        class="bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold"
+                        >1</span
+                      >
+                      <span
+                        ><strong>Anggota 1:</strong> 15 × 4 = ? (hasil =
+                        A)</span
+                      >
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span
+                        class="bg-green-500 text-white px-2 py-1 rounded text-xs font-bold"
+                        >2</span
+                      >
+                      <span
+                        ><strong>Anggota 2:</strong> A ÷ 6 = ? (hasil = B)</span
+                      >
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span
+                        class="bg-yellow-500 text-white px-2 py-1 rounded text-xs font-bold"
+                        >3</span
+                      >
+                      <span
+                        ><strong>Anggota 3:</strong> B + 23 = ? (hasil =
+                        C)</span
+                      >
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span
+                        class="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold"
+                        >4</span
+                      >
+                      <span
+                        ><strong>Anggota 4:</strong> C × 2 = ? (FINAL
+                        ANSWER)</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-success-100 border border-success-300 rounded-lg p-3 mt-4"
+                  >
+                    <p class="text-success-700 font-bold text-center">
+                      🏆 Jawaban Tim: 66
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPATIAL CHALLENGES SECTION -->
+      <section class="mb-16 stagger-animation" style="animation-delay: 0.2s">
+        <div
+          class="glass-effect bg-white/95 border-l-8 border-green-500 rounded-2xl overflow-hidden shadow-xl"
+        >
+          <!-- Section Header -->
+          <div class="category-gradient-spatial text-white p-6 lg:p-8">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="text-4xl lg:text-5xl animate-bounce-slow">🧩</div>
+              <h2 class="text-2xl lg:text-3xl font-bold">SPATIAL CHALLENGES</h2>
+            </div>
+            <p class="text-green-100 text-sm lg:text-base opacity-90">
+              Tantangan ruang dan bentuk untuk mengembangkan kemampuan
+              visualisasi spasial
+            </p>
+          </div>
+
+          <div class="p-6 lg:p-8">
+            <!-- Individual Level -->
+            <div class="mb-12">
+              <div
+                class="bg-gradient-to-r from-slate-700 to-slate-600 text-white text-center py-4 px-6 rounded-xl mb-8 shadow-lg"
+              >
+                <h3
+                  class="text-lg lg:text-xl font-bold flex items-center justify-center gap-2"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  INDIVIDUAL - Round 1, 2, 5, 6, 7
+                </h3>
+              </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Shape Recognition Card -->
+                <div
+                  class="card-hover bg-white border border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-green-300 group"
+                >
+                  <div class="flex items-start justify-between mb-4">
+                    <span
+                      class="inline-block px-3 py-1 bg-success-100 text-success-700 text-xs font-semibold rounded-full"
+                    >
+                      MUDAH
+                    </span>
+                    <div
+                      class="flex items-center gap-1 bg-blue-500 text-white px-2 py-1 rounded-lg text-xs font-medium"
+                    >
+                      <svg
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      2 menit
+                    </div>
+                  </div>
+
+                  <h4
+                    class="text-xl font-bold text-slate-800 mb-3 group-hover:text-green-600 transition-colors"
+                  >
+                    Shape Recognition 🔍
+                  </h4>
+
+                  <div class="text-slate-600 space-y-3 mb-4">
+                    <p class="text-sm">
+                      Bentuk mana yang sama dengan gambar yang diputar?
+                    </p>
+                    <div
+                      class="bg-blue-50 border-2 border-dashed border-blue-300 p-4 rounded-lg text-center visual-pattern"
+                    >
+                      <div class="text-lg mb-2">Original: ⬟</div>
+                      <div class="space-x-2">
+                        <span>A) ⬢</span>
+                        <span>B) ⬟</span>
+                        <span>C) ⬡</span>
+                        <span>D) ⬠</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-success-100 border border-success-300 rounded-lg p-3"
+                  >
+                    <p class="text-success-700 font-semibold text-sm">
+                      ✓ Jawaban: B
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Pattern Blocks Card -->
+                <div
+                  class="card-hover bg-white border border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-green-300 group"
+                >
+                  <div class="flex items-start justify-between mb-4">
+                    <span
+                      class="inline-block px-3 py-1 bg-warning-100 text-warning-700 text-xs font-semibold rounded-full"
+                    >
+                      SEDANG
+                    </span>
+                    <div
+                      class="flex items-center gap-1 bg-blue-500 text-white px-2 py-1 rounded-lg text-xs font-medium"
+                    >
+                      <svg
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      3 menit
+                    </div>
+                  </div>
+
+                  <h4
+                    class="text-xl font-bold text-slate-800 mb-3 group-hover:text-green-600 transition-colors"
+                  >
+                    Pattern Blocks 🔷
+                  </h4>
+
+                  <div class="text-slate-600 space-y-3 mb-4">
+                    <p class="text-sm">
+                      Susun 4 segitiga sama sisi untuk membentuk:
+                    </p>
+                    <div
+                      class="bg-blue-50 border-2 border-dashed border-blue-300 p-4 rounded-lg text-center visual-pattern"
+                    >
+                      <div class="text-sm mb-2">
+                        Target: Bentuk Diamond Besar
+                      </div>
+                      <div class="text-lg">△ △ △ △ → ◊</div>
+                      <div class="text-xs text-blue-600 mt-2">
+                        Gambar susunannya!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-yellow-50 border border-yellow-300 rounded-lg p-3"
+                  >
+                    <p class="text-yellow-700 font-semibold text-sm">
+                      📝 Jawaban berupa gambar susunan
+                    </p>
+                  </div>
+                </div>
+
+                <!-- 3D Visualization Card -->
+                <div
+                  class="card-hover bg-white border border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-green-300 group lg:col-span-2 xl:col-span-1"
+                >
+                  <div class="flex items-start justify-between mb-4">
+                    <span
+                      class="inline-block px-3 py-1 bg-danger-100 text-danger-700 text-xs font-semibold rounded-full"
+                    >
+                      SULIT
+                    </span>
+                    <div
+                      class="flex items-center gap-1 bg-blue-500 text-white px-2 py-1 rounded-lg text-xs font-medium"
+                    >
+                      <svg
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      4 menit
+                    </div>
+                  </div>
+
+                  <h4
+                    class="text-xl font-bold text-slate-800 mb-3 group-hover:text-green-600 transition-colors"
+                  >
+                    3D Visualization 📐
+                  </h4>
+
+                  <div class="text-slate-600 space-y-3 mb-4">
+                    <p class="text-sm">
+                      Jika kubus ini dilipat, sisi mana yang akan berhadapan
+                      dengan sisi bertanda "X"?
+                    </p>
+                    <div
+                      class="bg-blue-50 border-2 border-dashed border-blue-300 p-4 rounded-lg text-center visual-pattern"
+                    >
+                      <div class="text-sm mb-2">Jaring-jaring kubus:</div>
+                      <div class="text-lg leading-tight">
+                        <div>&nbsp;&nbsp;[A]</div>
+                        <div>[B][X][C][D]</div>
+                        <div>&nbsp;&nbsp;[E]</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-success-100 border border-success-300 rounded-lg p-3"
+                  >
+                    <p class="text-success-700 font-semibold text-sm">
+                      ✓ Jawaban: Sisi C
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Team Level -->
+            <div>
+              <div
+                class="bg-gradient-to-r from-slate-700 to-slate-600 text-white text-center py-4 px-6 rounded-xl mb-8 shadow-lg"
+              >
+                <h3
+                  class="text-lg lg:text-xl font-bold flex items-center justify-center gap-2"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"
+                    />
+                  </svg>
+                  TEAM - Round 3 & 4
+                </h3>
+              </div>
+
+              <div
+                class="bg-gradient-to-br from-emerald-100 via-teal-50 to-cyan-100 border border-emerald-200 rounded-2xl p-8 shadow-lg"
+              >
+                <div class="flex items-center gap-3 mb-6">
+                  <div class="text-3xl">🧩</div>
+                  <h4 class="text-2xl font-bold text-slate-800">
+                    Collaborative Puzzle
+                  </h4>
+                </div>
+
+                <div
+                  class="bg-orange-50 border-l-4 border-orange-400 p-4 rounded-r-xl mb-6"
+                >
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <strong class="text-orange-800">Format:</strong>
+                      <span class="text-orange-700">
+                        Tim dapat 16 piece puzzle terpisah</span
+                      >
+                    </div>
+                    <div>
+                      <strong class="text-orange-800">Aturan:</strong>
+                      <span class="text-orange-700">
+                        Hanya boleh komunikasi verbal, tidak boleh tukar
+                        piece</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-white rounded-xl p-6 shadow-inner border border-slate-200"
+                >
+                  <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                      <div class="bg-green-500 text-white p-2 rounded-lg">
+                        <svg
+                          class="w-4 h-4"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <strong class="text-slate-800">Misi:</strong>
+                        <span class="text-slate-600">
+                          Menyusun gambar "Peta Indonesia"</span
+                        >
+                      </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                      <div class="bg-blue-500 text-white p-2 rounded-lg">
+                        <svg
+                          class="w-4 h-4"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <strong class="text-slate-800">Setiap anggota:</strong>
+                        <span class="text-slate-600">
+                          Dapat 4 piece puzzle</span
+                        >
+                      </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                      <div class="bg-yellow-500 text-white p-2 rounded-lg">
+                        <svg
+                          class="w-4 h-4"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <strong class="text-slate-800">Tantangan:</strong>
+                        <span class="text-slate-600">
+                          Koordinasi tanpa melihat piece teman</span
+                        >
+                      </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                      <div class="bg-red-500 text-white p-2 rounded-lg">
+                        <svg
+                          class="w-4 h-4"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <strong class="text-slate-800">Waktu:</strong>
+                        <span class="text-slate-600"> 8 menit</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MEMORY CHALLENGES SECTION -->
+      <section class="mb-16 stagger-animation" style="animation-delay: 0.3s">
+        <div
+          class="glass-effect bg-white/95 border-l-8 border-blue-500 rounded-2xl overflow-hidden shadow-xl"
+        >
+          <!-- Section Header -->
+          <div class="category-gradient-memory text-white p-6 lg:p-8">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="text-4xl lg:text-5xl animate-bounce-slow">🧠</div>
+              <h2 class="text-2xl lg:text-3xl font-bold">MEMORY CHALLENGES</h2>
+            </div>
+            <p class="text-blue-100 text-sm lg:text-base opacity-90">
+              Tantangan memori dan konsentrasi untuk melatih daya ingat dan
+              fokus
+            </p>
+          </div>
+
+          <div class="p-6 lg:p-8">
+            <!-- Individual Level -->
+            <div class="mb-12">
+              <div
+                class="bg-gradient-to-r from-slate-700 to-slate-600 text-white text-center py-4 px-6 rounded-xl mb-8 shadow-lg"
+              >
+                <h3
+                  class="text-lg lg:text-xl font-bold flex items-center justify-center gap-2"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  INDIVIDUAL - Round 1, 2, 5, 6, 7
+                </h3>
+              </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Sequence Memory Card -->
+                <div
+                  class="card-hover bg-white border border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-blue-300 group"
+                >
+                  <div class="flex items-start justify-between mb-4">
+                    <span
+                      class="inline-block px-3 py-1 bg-success-100 text-success-700 text-xs font-semibold rounded-full"
+                    >
+                      MUDAH
+                    </span>
+                    <div
+                      class="flex items-center gap-1 bg-blue-500 text-white px-2 py-1 rounded-lg text-xs font-medium"
+                    >
+                      <svg
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      3 menit
+                    </div>
+                  </div>
+
+                  <h4
+                    class="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors"
+                  >
+                    Sequence Memory 🔄
+                  </h4>
+
+                  <div class="text-slate-600 space-y-3 mb-4">
+                    <div>
+                      <p class="text-sm font-medium mb-2">
+                        Fase 1: Lihat urutan warna (30 detik)
+                      </p>
+                      <div
+                        class="bg-slate-50 p-3 rounded-lg text-center text-2xl space-x-1"
+                      >
+                        🔴 🟢 🔵 🟡 🔴 🟢
+                      </div>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium">
+                        Fase 2: Ulangi urutan yang sama
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="bg-blue-50 border border-blue-300 rounded-lg p-3">
+                    <p class="text-blue-700 font-semibold text-sm">
+                      🎯 Uji kemampuan memori visual
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Visual Memory Card -->
+                <div
+                  class="card-hover bg-white border border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-blue-300 group"
+                >
+                  <div class="flex items-start justify-between mb-4">
+                    <span
+                      class="inline-block px-3 py-1 bg-warning-100 text-warning-700 text-xs font-semibold rounded-full"
+                    >
+                      SEDANG
+                    </span>
+                    <div
+                      class="flex items-center gap-1 bg-blue-500 text-white px-2 py-1 rounded-lg text-xs font-medium"
+                    >
+                      <svg
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      4 menit
+                    </div>
+                  </div>
+
+                  <h4
+                    class="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors"
+                  >
+                    Visual Memory 👁️
+                  </h4>
+
+                  <div class="text-slate-600 space-y-3 mb-4">
+                    <div class="bg-slate-50 p-3 rounded-lg space-y-2 text-sm">
+                      <div>
+                        <strong>Fase 1:</strong> Lihat 12 gambar hewan (45
+                        detik)
+                      </div>
+                      <div><strong>Fase 2:</strong> Gambar disembunyikan</div>
+                      <div>
+                        <strong>Fase 3:</strong> Sebutkan hewan yang TIDAK ada:
+                      </div>
+                      <div class="text-xs bg-white p-2 rounded border">
+                        Gajah, Kucing, Ayam, Sapi, Kambing, Bebek
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="bg-blue-50 border border-blue-300 rounded-lg p-3">
+                    <p class="text-blue-700 font-semibold text-sm">
+                      🔍 Uji kemampuan observasi detail
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Story Recall Card -->
+                <div
+                  class="card-hover bg-white border border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-blue-300 group lg:col-span-2 xl:col-span-1"
+                >
+                  <div class="flex items-start justify-between mb-4">
+                    <span
+                      class="inline-block px-3 py-1 bg-danger-100 text-danger-700 text-xs font-semibold rounded-full"
+                    >
+                      SULIT
+                    </span>
+                    <div
+                      class="flex items-center gap-1 bg-blue-500 text-white px-2 py-1 rounded-lg text-xs font-medium"
+                    >
+                      <svg
+                        class="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      5 menit
+                    </div>
+                  </div>
+
+                  <h4
+                    class="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors"
+                  >
+                    Story Recall 📚
+                  </h4>
+
+                  <div class="text-slate-600 space-y-3 mb-4">
+                    <p class="text-sm">
+                      Dengarkan cerita pendek (2 menit), lalu jawab:
+                    </p>
+                    <div class="bg-slate-50 p-3 rounded-lg space-y-1 text-sm">
+                      <div>• Siapa nama tokoh utama?</div>
+                      <div>• Berapa umur tokoh tersebut?</div>
+                      <div>• Apa warna bajunya?</div>
+                      <div>• Ke mana dia pergi?</div>
+                      <div>• Apa yang dia beli?</div>
+                    </div>
+                  </div>
+
+                  <div class="bg-blue-50 border border-blue-300 rounded-lg p-3">
+                    <p class="text-blue-700 font-semibold text-sm">
+                      📖 Uji kemampuan memori auditori
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Team Level -->
+            <div>
+              <div
+                class="bg-gradient-to-r from-slate-700 to-slate-600 text-white text-center py-4 px-6 rounded-xl mb-8 shadow-lg"
+              >
+                <h3
+                  class="text-lg lg:text-xl font-bold flex items-center justify-center gap-2"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"
+                    />
+                  </svg>
+                  TEAM - Round 3 & 4
+                </h3>
+              </div>
+
+              <div
+                class="bg-gradient-to-br from-blue-100 via-indigo-50 to-purple-100 border border-blue-200 rounded-2xl p-8 shadow-lg"
+              >
+                <div class="flex items-center gap-3 mb-6">
+                  <div class="text-3xl">🔗</div>
+                  <h4 class="text-2xl font-bold text-slate-800">
+                    Memory Chain Team
+                  </h4>
+                </div>
+
+                <div
+                  class="bg-orange-50 border-l-4 border-orange-400 p-4 rounded-r-xl mb-6"
+                >
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <strong class="text-orange-800">Format:</strong>
+                      <span class="text-orange-700">
+                        Estafet memori berkelompok</span
+                      >
+                    </div>
+                    <div>
+                      <strong class="text-orange-800">Aturan:</strong>
+                      <span class="text-orange-700">
+                        Setiap anggota menambah 1 item ke daftar</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-white rounded-xl p-6 shadow-inner border border-slate-200"
+                >
+                  <div class="mb-4">
+                    <h5 class="font-bold text-slate-800 text-center mb-4">
+                      🛒 Contoh tema: "Pergi ke Pasar"
+                    </h5>
+                  </div>
+
+                  <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                      <span
+                        class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold"
+                        >1</span
+                      >
+                      <span class="text-sm"
+                        >"Saya pergi ke pasar membeli
+                        <strong>apel</strong>"</span
+                      >
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span
+                        class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold"
+                        >2</span
+                      >
+                      <span class="text-sm"
+                        >"...membeli <strong>apel</strong> dan
+                        <strong>pisang</strong>"</span
+                      >
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span
+                        class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold"
+                        >3</span
+                      >
+                      <span class="text-sm"
+                        >"...<strong>apel, pisang</strong>, dan
+                        <strong>wortel</strong>"</span
+                      >
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span
+                        class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold"
+                        >4</span
+                      >
+                      <span class="text-sm"
+                        >"...<strong>apel, pisang, wortel</strong>, dan
+                        <strong>telur</strong>"</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-300 rounded-lg p-4 mt-6 text-center"
+                  >
+                    <p class="text-purple-800 font-bold">
+                      🎯 Target: 12 item tanpa kesalahan
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Implementation Notes -->
+      <section class="stagger-animation" style="animation-delay: 0.4s">
+        <div
+          class="glass-effect bg-slate-800/95 text-white rounded-2xl p-8 lg:p-12 shadow-2xl"
+        >
+          <div class="flex items-center gap-3 mb-8">
+            <div class="text-3xl">📋</div>
+            <h3 class="text-2xl lg:text-3xl font-bold">Catatan Implementasi</h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-6">
+              <div class="flex items-start gap-3">
+                <div class="bg-blue-500 p-2 rounded-lg mt-1">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-blue-300 mb-1">Scoring</h4>
+                  <p class="text-slate-300 text-sm">
+                    Setiap kategori maksimal 100 poin
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="bg-green-500 p-2 rounded-lg mt-1">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-green-300 mb-1">Bonus</h4>
+                  <p class="text-slate-300 text-sm">
+                    Kecepatan menyelesaikan +10 poin
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="bg-purple-500 p-2 rounded-lg mt-1">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-purple-300 mb-1">
+                    Team Scoring
+                  </h4>
+                  <p class="text-slate-300 text-sm">
+                    Rata-rata individual + bonus kerjasama
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div class="flex items-start gap-3">
+                <div class="bg-orange-500 p-2 rounded-lg mt-1">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-orange-300 mb-1">
+                    Tingkat Kesulitan
+                  </h4>
+                  <p class="text-slate-300 text-sm">Meningkat setiap round</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="bg-pink-500 p-2 rounded-lg mt-1">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-pink-300 mb-1">Adaptasi</h4>
+                  <p class="text-slate-300 text-sm">
+                    Soal disesuaikan usia dan kemampuan SD
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Info -->
+          <div class="mt-8 pt-6 border-t border-slate-600">
+            <div class="bg-slate-700/50 rounded-xl p-6">
+              <h4 class="font-bold text-slate-200 mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Tips untuk Penyelenggara
+              </h4>
+              <ul class="text-slate-300 text-sm space-y-2">
+                <li>
+                  • Pastikan semua materi soal sudah disiapkan dan dites
+                  sebelumnya
+                </li>
+                <li>
+                  • Sediakan timer yang jelas dan mudah dilihat semua peserta
+                </li>
+                <li>
+                  • Untuk tantangan tim, pastikan ruang memungkinkan komunikasi
+                  yang baik
+                </li>
+                <li>
+                  • Siapkan materi cadangan jika ada soal yang terlalu
+                  mudah/sulit
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/20 bg-slate-900/50 glass-effect mt-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div
+          class="flex flex-col lg:flex-row justify-between items-center gap-6"
+        >
+          <div class="text-center lg:text-left">
+            <h4 class="text-white font-bold mb-2">COC Challenge Examples</h4>
+            <p class="text-slate-300 text-sm">
+              Contoh soal dan tantangan untuk kompetisi COC tingkat SD
+            </p>
+          </div>
+
+          <div class="flex items-center gap-6">
+            <a
+              href="index.html"
+              class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:bg-white/10"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 16l-4-4m0 0l4-4m-4 4h18"
+                />
+              </svg>
+              Kembali ke Dashboard
+            </a>
+
+            <div class="text-slate-400 text-sm">
+              © <span id="year"></span> .callsamm
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+      // Set current year in footer
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Smooth scrolling for internal links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Intersection observer for stagger animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = "running";
+            entry.target.classList.add("animate-in");
+          }
+        });
+      }, observerOptions);
+
+      // Observe all elements with stagger animation
+      document.querySelectorAll(".stagger-animation").forEach((el, index) => {
+        el.style.animationDelay = `${index * 0.1}s`;
+        el.style.animationPlayState = "paused";
+        observer.observe(el);
+      });
+
+      // Add parallax effect to floating shapes
+      let ticking = false;
+
+      function updateParallax() {
+        const scrolled = window.pageYOffset;
+        const parallax = scrolled * 0.3;
+
+        document.querySelectorAll(".floating-shape").forEach((shape, index) => {
+          const speed = (index + 1) * 0.1;
+          shape.style.transform = `translateY(${parallax * speed}px)`;
+        });
+
+        ticking = false;
+      }
+
+      function requestTick() {
+        if (!ticking) {
+          requestAnimationFrame(updateParallax);
+          ticking = true;
+        }
+      }
+
+      window.addEventListener("scroll", requestTick);
+
+      // Enhanced card interactions
+      document.querySelectorAll(".card-hover").forEach((card) => {
+        card.addEventListener("mouseenter", function (e) {
+          this.style.transform = "translateY(-8px) scale(1.02)";
+        });
+
+        card.addEventListener("mouseleave", function (e) {
+          this.style.transform = "translateY(0) scale(1)";
+        });
+      });
+
+      // Add loading animation
+      window.addEventListener("load", () => {
+        document.body.classList.add("loaded");
+
+        // Animate cards in sequence
+        const cards = document.querySelectorAll(".card-hover");
+        cards.forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add("animate-scale-in");
+          }, index * 50);
+        });
+      });
+
+      // Keyboard navigation improvements
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Tab") {
+          document.body.classList.add("using-keyboard");
+        }
+
+        // Add ESC key to close any modals or return to top
+        if (e.key === "Escape") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+
+      document.addEventListener("mousedown", () => {
+        document.body.classList.remove("using-keyboard");
+      });
+
+      // Performance optimization
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      );
+
+      if (prefersReducedMotion.matches) {
+        document.documentElement.style.setProperty(
+          "--animation-duration",
+          "0.01ms"
+        );
+        document.querySelectorAll(".floating-shape").forEach((shape) => {
+          shape.style.animation = "none";
+        });
+      }
+
+      // Add copy functionality for code examples
+      function addCopyButtons() {
+        const codeBlocks = document.querySelectorAll(
+          ".visual-pattern, .font-mono"
+        );
+
+        codeBlocks.forEach((block) => {
+          if (block.textContent.trim().length > 10) {
+            const copyButton = document.createElement("button");
+            copyButton.className =
+              "absolute top-2 right-2 bg-slate-600 text-white p-1 rounded text-xs hover:bg-slate-500 transition-colors";
+            copyButton.innerHTML = "📋";
+            copyButton.title = "Copy to clipboard";
+
+            // Make parent relative if not already
+            if (getComputedStyle(block.parentElement).position === "static") {
+              block.parentElement.style.position = "relative";
+            }
+
+            copyButton.addEventListener("click", async () => {
+              try {
+                await navigator.clipboard.writeText(block.textContent);
+                copyButton.innerHTML = "✓";
+                setTimeout(() => (copyButton.innerHTML = "📋"), 1000);
+              } catch (err) {
+                console.log("Copy failed:", err);
+              }
+            });
+
+            block.parentElement.appendChild(copyButton);
+          }
+        });
+      }
+
+      // Initialize copy buttons after DOM is loaded
+      document.addEventListener("DOMContentLoaded", addCopyButtons);
+
+      // Add search functionality (optional enhancement)
+      function initializeSearch() {
+        const searchInput = document.createElement("input");
+        searchInput.type = "text";
+        searchInput.placeholder = "Cari tantangan...";
+        searchInput.className =
+          "w-full max-w-md mx-auto px-4 py-2 rounded-xl border border-white/20 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-primary-500";
+
+        // You can add this to header if needed
+        // document.querySelector('header .relative').appendChild(searchInput);
+
+        searchInput.addEventListener("input", (e) => {
+          const searchTerm = e.target.value.toLowerCase();
+          const cards = document.querySelectorAll(".card-hover");
+
+          cards.forEach((card) => {
+            const text = card.textContent.toLowerCase();
+            const shouldShow = text.includes(searchTerm);
+            card.style.display = shouldShow ? "block" : "none";
+          });
+        });
+      }
+
+      // Uncomment if you want search functionality
+      // initializeSearch();
+    </script>
   </body>
 </html>
